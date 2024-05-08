@@ -3,8 +3,10 @@ project(CYFEST C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(CYFEST include/main.c
-        include/salle.c
+include_directories(include/)
+
+add_executable(CYFEST main.c
+        salle.c
         include/salle.h
-        include/fonx.c
+        fonx.c
         include/fonx.h)

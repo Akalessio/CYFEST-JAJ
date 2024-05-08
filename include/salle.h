@@ -5,7 +5,10 @@ typedef struct{
     char *nom;
     int siege;
     int **arr;
+    int *taille;
 }Salle;
+
+Salle creerSalle(void);
 
 #endif
 
