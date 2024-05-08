@@ -72,3 +72,23 @@ Salle creerSalle(void){                                                         
     }
 return a;
 };
+
+void afficheSalle(Salle a){
+    printf("nom de salle : %s\nnombre de siege de la salle : %d\nplan de la salle : \n", a.nom, a.siege, a.taille[0]);
+
+    for (int i = 0; i < a.taille[0]; ++i) {
+        for (int j = 0; j < a.taille[i+1]; ++j) {
+            printf("%d", a.arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void freeSalle(Salle a){
+    free(a.nom);
+    for (int i = 0; i < a.taille[0]; ++i) {
+        free(*(a.arr+i));
+    }
+    free(a.arr);
+    free(a.taille);
+}

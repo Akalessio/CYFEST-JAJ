@@ -9,6 +9,8 @@ typedef struct{
 }Salle;
 
 Salle creerSalle(void);
+void afficheSalle(Salle);
+void freeSalle(Salle);
 
 #endif
 
