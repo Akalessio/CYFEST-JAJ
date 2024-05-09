@@ -145,3 +145,4 @@ void freeSalle(Salle a){
     free(a.arr);
     free(a.taille);
 }
+
