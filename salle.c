@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "fonx.h"
 
 
 Salle creerSalle(void){                                                                                                 //creation d'une salle
@@ -75,6 +76,8 @@ return a;
 
 void afficheSalle(Salle a){
     printf("nom de salle : %s\nnombre de siege de la salle : %d\nplan de la salle : \n", a.nom, a.siege, a.taille[0]);
+
+    int l = plusGrand(a.taille, a.taille[0]);
 
     for (int i = 0; i < a.taille[0]; ++i) {
         for (int j = 0; j < a.taille[i+1]; ++j) {
