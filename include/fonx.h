@@ -4,5 +4,6 @@
 int plusGrand(int *, int);
 int decal(int, int);
 void decalPrint(int);
+void verifAlloc(void *);
 
 #endif

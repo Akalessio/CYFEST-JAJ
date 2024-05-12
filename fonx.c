@@ -35,3 +35,10 @@ void decalPrint(int a){
         printf("  ");
     }
 }
+
+void verifAlloc(void *a){
+    if(a == NULL){
+        printf("erreur lors de l'allocation\n");
+        exit(1);
+    }
+}

@@ -49,6 +49,34 @@ Place creerPlace(int a){
     return c;
 }
 
+void devPlace(Place *a){
+
+if(a->code == 0){
+        a->classe = 'A';
+        a->res = 0;
+    }
+    else if(a->code == 1){
+        a->classe = 'B';
+        a->res = 0;
+    }
+    else if(a->code == 2){
+        a->classe = 'C';
+        a->res = 0;
+    }
+    else if(a->code == 3){
+        a->classe = 'A';
+        a->res = 1;
+    }
+    else if(a->code == 4){
+        a->classe = 'B';
+        a->res = 1;
+    }
+    else if(a->code == 5){
+        a->classe = 'C';
+        a->res = 1;
+    }
+}
+
 Salle creerSalle(void){                                                                                                 //creation d'une salle
     Salle a;
     char chaine[50];                                                                                                    //tableau contenant le nom de la salle
@@ -156,7 +184,7 @@ void afficheSalle(Salle a){
     printf("nom de salle : %s\nnombre de siege de la salle : %d\nplan de la salle : \n", a.nom, a.siege, a.taille[0]);
 
     int l = plusGrand(a.taille, a.taille[0]);
-    int d =0;
+    int d = 0;
 
     for (int i = 0; i < a.taille[0]; ++i) {
         if(i<9) {

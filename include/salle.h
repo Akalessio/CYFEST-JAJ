@@ -20,6 +20,7 @@ Place creerPlace(int);
 Salle creerSalle(void);
 void afficheSalle(Salle);
 void freeSalle(Salle);
+void devPlace(Place *);
 
 #endif
 

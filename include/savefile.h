@@ -4,5 +4,6 @@
 #include "salle.h"
 
 void saveSalle(Salle);
+Salle lectureSave(char *);
 
 #endif
