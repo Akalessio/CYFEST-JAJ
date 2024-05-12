@@ -9,4 +9,6 @@ add_executable(CYFEST main.c
         salle.c
         include/salle.h
         fonx.c
-        include/fonx.h)
+        include/fonx.h
+        savefile.c
+        include/savefile.h)

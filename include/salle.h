@@ -4,10 +4,12 @@
 typedef struct {
     int res;
     char classe;
+    int code;
 }Place;
 
 typedef struct{
     char *nom;
+    char *nomFichier;
     int siege;
     Place **arr;
     int *taille;
