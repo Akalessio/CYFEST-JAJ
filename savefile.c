@@ -31,6 +31,11 @@ void saveSalle(Salle a){
         fputs("\n", save);
     }
 
+    fprintf(save, "%f\n", a.classeA);
+    fprintf(save, "%f\n", a.classeB);
+    fprintf(save, "%f\n", a.classeC);
+
+
     fclose(save);
 }
 
@@ -65,8 +70,7 @@ Salle lectureSave(char *nom){
         a.nom[i] = b[i];
         a.nomFichier [i] = b[i];
     }
-
-
+    b[c-1] = '\0';
 
     a.nomFichier[c-1] = '.';
     a.nomFichier[c] = 'S';
@@ -119,6 +123,10 @@ Salle lectureSave(char *nom){
             devPlace(&a.arr[i-1][j]);
         }
     }
+
+    fscanf(save, "%f", &a.classeA);
+    fscanf(save, "%f", &a.classeB);
+    fscanf(save, "%f", &a.classeC);
 
     return a;
 }

@@ -17,7 +17,18 @@ int main() {
     saveSalle(a);
     freeSalle(a);
     }
+    else if(b == 2){
+        char nom[50];
+        printf("entrez le nom de la salle sauvegarde\n");
+        scanf("%s", nom);
+        Salle a = lectureSave(nom);
+        printf("%s\n", a.nomFichier);
 
+        a = reservePlace(a);
+        affichePlan(a);
+        saveSalle(a);
+        freeSalle(a);
+    }
     else{
         char nom[50];
         printf("entrez le nom de la salle sauvegarde\n");

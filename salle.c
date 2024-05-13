@@ -149,6 +149,7 @@ Salle creerSalle(void){                                                         
     int l = -1;
     int x = -1;
     Place y;
+    int z = 0;
 
     for (int i = 1; i < r+1; ++i) {
 
@@ -174,9 +175,22 @@ Salle creerSalle(void){                                                         
         }
 
         a.taille[i] = l;
-
+        z = z + l;
         l = -1;
     }
+    printf("quel est le prix d'une place de classe 1\n");
+    scanf("%f", &a.classeA);
+    printf("quel est le prix d'une place de classe 2\n");
+    scanf("%f", &a.classeB);
+    printf("quel est le prix d'une place de classe 3\n");
+    scanf("%f", &a.classeC);
+
+    if(z!=a.siege){
+        printf("le nombre de siege annonce ne correspond pas au nombre de rangees et lignes\n");
+        freeSalle(a);
+        a = creerSalle();
+    }
+
 return a;
 };
 
@@ -194,24 +208,182 @@ void afficheSalle(Salle a){
         }
         d = decal(l, a.taille[i+1]);
         decalPrint(d);
+
         for (int j = 0; j < a.taille[i+1]; ++j) {
-            if((a.arr[i][j]).res == 0) {
+
+            if((a.arr[i][j]).code == 0){
                 printf("0 ");
             }
-            else{
-                printf("X");
+            else if((a.arr[i][j]).code == 1) {
+                printf("0 ");
+            }
+            else if((a.arr[i][j]).code == 2) {
+                printf("0 ");
+            }
+            else if((a.arr[i][j]).code == 3) {
+                printf("X ");
+            }
+            else if((a.arr[i][j]).code == 4) {
+                printf("X ");
+            }
+            else if((a.arr[i][j]).code == 5){
+                printf("X ");
             }
         }
+
+        printf("\n");
+    }
+}
+
+void affichePlan(Salle a){
+    printf("plan de la salle : \n", a.nom, a.siege, a.taille[0]);
+
+    int l = plusGrand(a.taille, a.taille[0]);
+    int d = 0;
+
+    for (int i = 0; i < a.taille[0]; ++i) {
+        if(i<9) {
+            printf("R%d |  ", i + 1);
+        } else{
+            printf("R%d|  ", i+1);
+        }
+        d = decal(l, a.taille[i+1]);
+        decalPrint(d);
+
+        for (int j = 0; j < a.taille[i+1]; ++j) {
+
+            if((a.arr[i][j]).code == 0){
+                printf("0 ");
+            }
+            else if((a.arr[i][j]).code == 1) {
+                printf("0 ");
+            }
+            else if((a.arr[i][j]).code == 2) {
+                printf("0 ");
+            }
+            else if((a.arr[i][j]).code == 3) {
+                printf("X ");
+            }
+            else if((a.arr[i][j]).code == 4) {
+                printf("X ");
+            }
+            else if((a.arr[i][j]).code == 5){
+                printf("X ");
+            }
+        }
+
         printf("\n");
     }
 }
 
 void freeSalle(Salle a){
     free(a.nom);
+    free(a.nomFichier);
     for (int i = 0; i < a.taille[0]; ++i) {
         free(*(a.arr+i));
     }
     free(a.arr);
     free(a.taille);
+}
+
+Salle verifSiege(Salle a){
+    a.siegeres = 0;
+    for (int i = 1; i < a.taille[0]+1; ++i) {
+        for (int j = 0; j < a.taille[i]; ++j) {
+            if(a.arr[i-1][j].res == 1){
+                a.siegeres++;
+            }
+        }
+    }
+    return a;
+}
+
+Salle actualiseSiege(Salle a){
+
+    for (int i = 1; i < a.taille[0]+1; ++i) {
+        for (int j = 0; j < a.taille[i]; ++j) {
+            if(a.arr[i-1][j].classe == 'A' && a.arr[i-1][j].res == 0){
+                a.arr[i-1][j].code = 0;
+            }
+            else if(a.arr[i-1][j].classe == 'B' && a.arr[i-1][j].res == 0){
+                a.arr[i-1][j].code = 1;
+            }
+            else if(a.arr[i-1][j].classe == 'C' && a.arr[i-1][j].res == 0){
+                a.arr[i-1][j].code = 2;
+            }
+            else if(a.arr[i-1][j].classe == 'A' && a.arr[i-1][j].res == 1){
+                a.arr[i-1][j].code = 3;
+            }
+            else if(a.arr[i-1][j].classe == 'B' && a.arr[i-1][j].res == 1){
+                a.arr[i-1][j].code = 4;
+            }
+            else if(a.arr[i-1][j].classe == 'C' && a.arr[i-1][j].res == 1){
+                a.arr[i-1][j].code = 5;
+            }
+        }
+    }
+    return a;
+}
+
+Salle reservePlace(Salle a){
+
+    affichePlan(a);
+    a = verifSiege(a);
+
+    int p=-1;
+
+    int r = 0, l = 0, v = 0;
+
+    while (p<=0 || p>a.siege-a.siegeres) {
+        printf("combien de places voulez vous reservez\n");
+        scanf("%d", &p);
+    }
+
+    for (int i = 0; i < p; ++i) {
+        v = -1;
+        r = -1;
+        l = -1;
+
+        while (r>a.taille[0]-1 || r<=0) {
+            printf("rentrez le numero de la rangee\n");
+            scanf("%d", &r);
+        }
+        while (l>a.taille[r+1]-1 || l<=0) {
+            printf("rentrez le numero de la ligne\n");
+            scanf("%d", &l);
+        }
+
+        if(a.arr[r-1][l-1].res == 1){
+            printf("cette place est deja reserve choississez en une autre\n");
+            i--;
+            continue;
+        }
+
+        if(a.arr[r-1][l-1].classe == 'A'){
+            printf("le prix de la place est de %fe\n", a.classeA);
+        }
+        else if(a.arr[r-1][l-1].classe == 'B'){
+            printf("le prix de la place est de %fe\n", a.classeB);
+        }
+        else if(a.arr[r-1][l-1].classe == 'C'){
+            printf("le prix de la place est de %fe\n", a.classeC);
+        }
+
+        while (v!=0 && v!=1) {
+            printf("etes vous sur de vouloir reserver cette place\n1 pour oui\n0 pour non\n");
+            scanf("%d", &v);
+
+            if(v == 1){
+                a.arr[r-1][l-1].res = 1;
+            }
+            if(v == 0){
+                i--;
+                continue;
+            }
+        }
+
+    }
+    actualiseSiege(a);
+    return a;
 }
 
