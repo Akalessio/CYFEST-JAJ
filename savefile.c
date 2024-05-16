@@ -128,5 +128,7 @@ Salle lectureSave(char *nom){
     fscanf(save, "%f", &a.classeB);
     fscanf(save, "%f", &a.classeC);
 
+    fclose(save);
+
     return a;
 }
