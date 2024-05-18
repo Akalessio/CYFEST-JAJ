@@ -1,11 +1,7 @@
 #ifndef CYFEST_SALLE_H
 #define CYFEST_SALLE_H
 
-typedef struct {
-    int res;
-    char classe;
-    int code;
-}Place;
+#include "place.h"
 
 typedef struct{
     char *nom;                      //nom de la salle
@@ -22,15 +18,14 @@ typedef struct{
 }Salle;
 
 
-Place creerPlace(int);
+
 Salle creerSalle(void);
 void afficheSalle(Salle);
 void freeSalle(Salle);
-void devPlace(Place *);
+
 void affichePlan(Salle);
-Salle verifSiege(Salle);
-Salle actualiseSiege(Salle);
-Salle reservePlace(Salle);
+
+
 Salle modifSalle(Salle, char *);
 
 #endif

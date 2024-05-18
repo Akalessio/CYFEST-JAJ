@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "savefile.h"
+#include "place.h"
 
 
 int main() {
@@ -28,6 +29,7 @@ int main() {
         affichePlan(a);
         saveSalle(a);
         freeSalle(a);
+
     } else if(b == 3){
         char nom[50];
         printf("entrez le nom de la salle sauvegarde\n");

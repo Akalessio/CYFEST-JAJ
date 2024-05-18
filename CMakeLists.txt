@@ -11,4 +11,6 @@ add_executable(CYFEST main.c
         fonx.c
         include/fonx.h
         savefile.c
-        include/savefile.h)
+        include/savefile.h
+        place.c
+        place.h)

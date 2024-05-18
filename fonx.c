@@ -42,3 +42,4 @@ void verifAlloc(void *a){
         exit(1);
     }
 }
+
