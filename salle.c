@@ -14,9 +14,9 @@ Salle creerSalle(void) {
     char chaine[50];                                                                                                    
 
     printf("entrez le nom de la salle\n");
-    scanf("%s", chaine);
+    fgets(chaine, 49, stdin);
 
-    int b = (int) strlen(chaine) + 1;                                                                                  
+    int b = (int)strlen(chaine) + 1;
     a.nom = NULL;
     a.nom = malloc(b);                                                                         
 
@@ -206,12 +206,6 @@ void freeSalle(Salle a) {
     free(a.arr);
     free(a.taille);
 }
-
-
-
-
-
-
 
 Salle modifSalle(Salle a, char *nom) {
     int c = -1;

@@ -3,6 +3,12 @@
 
 #include "place.h"
 
+typedef struct {
+    int res;
+    char classe;
+    int code;
+}Place;
+
 typedef struct{
     char *nom;                      //nom de la salle
     char *nomFichier;               //nom du fichier de sauvegarde de la salle
@@ -22,10 +28,7 @@ typedef struct{
 Salle creerSalle(void);
 void afficheSalle(Salle);
 void freeSalle(Salle);
-
 void affichePlan(Salle);
-
-
 Salle modifSalle(Salle, char *);
 
 #endif

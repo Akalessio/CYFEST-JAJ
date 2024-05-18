@@ -4,51 +4,57 @@
 #include <stdlib.h>
 #include "savefile.h"
 #include "place.h"
+#include "fonx.h"
 
 
 int main() {
-    int b = -1;
+    int c = -1;
+    int c1 = -1;
+    int c2 = -1;
+    int res = -1;
+    int res1 = -1;
+    int res2 = -1;
+    char nom[50];
+    Salle a;
 
-    printf("chiffre\n");
-    scanf("%d", &b);
+    while (res != 1 || c != 3){
+        printf("1) mode manager\n2) mode festivalier\n3) quitter le programme\n");
+        res = scanf("%d", &c);
 
-    if (b == 1) {
-    Salle a = creerSalle();
-    afficheSalle(a);
-    saveSalle(a);
-    freeSalle(a);
-    }
-    else if(b == 2){
-        char nom[50];
-        printf("entrez le nom de la salle sauvegarde\n");
-        scanf("%s", nom);
-        Salle a = lectureSave(nom);
+        if(res != 1){
+            while (getchar() != '\n');
+        }
 
+        if(c == 1){
+            while (res1 != 1 || c1 != 4) {
+                manage();
+                printf("1) creer une salle\n2) modifier salle\n3) afficher une salle\n4) quitter le mode manager\n");
+                res1 = scanf("%d", &c1);
 
-        a = reservePlace(a);
-        affichePlan(a);
-        saveSalle(a);
-        freeSalle(a);
+                if(res1 != 1){
+                    while (getchar() != '\n');
+                }
 
-    } else if(b == 3){
-        char nom[50];
-        printf("entrez le nom de la salle sauvegarde\n");
-        scanf("%s", nom);
-        Salle a = lectureSave(nom);
+                if(c1 == 1){
+                    while (c2 < 1 || c2 > 2) {
+                        manage();
+                        printf("1) creer une salle\n2) lire une sauvegarde de salle\n");
+                        res2 = scanf("%d", &c2);
 
-        a = modifSalle(a, nom);
-        afficheSalle(a);
-        saveSalle(a);
-        freeSalle(a);
-    }
-    else{
-        char nom[50];
-        printf("entrez le nom de la salle sauvegarde\n");
-        scanf("%s", nom);
-
-        Salle a = lectureSave(nom);
-        afficheSalle(a);
-        freeSalle(a);
+                        if (res2 != 1) {
+                            while (getchar() != '\n');
+                        }
+                        if(c2 == 1){
+                            a = creerSalle();
+                        } else if(c2 == 2){
+                            fgetchar();
+                            fgets(nom, 49, stdin);
+                            a = lectureSave(nom);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     return 0;

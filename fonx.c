@@ -43,3 +43,10 @@ void verifAlloc(void *a){
     }
 }
 
+void manage(void){
+    printf("Mode manager\n");
+}
+
+void festival(void){
+    printf("Mode Festivalier\n");
+}
