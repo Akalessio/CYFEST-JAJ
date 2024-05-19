@@ -50,3 +50,12 @@ void manage(void){
 void festival(void){
     printf("Mode Festivalier\n");
 }
+
+void verifNom(char *a){
+    int str = strlen(a);
+    for (int i = 0; i < str; ++i) {
+        if(a[i] == ' '){
+            a[i] = '_';
+        }
+    }
+}

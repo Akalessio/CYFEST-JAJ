@@ -7,5 +7,6 @@ void decalPrint(int);
 void verifAlloc(void *);
 void manage(void);
 void festival(void);
+void verifNom(char *);
 
 #endif

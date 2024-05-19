@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "fonx.h"
+#include "place.h"
 
 void saveSalle(Salle a){
     FILE *save = NULL;
@@ -34,6 +35,8 @@ void saveSalle(Salle a){
     fprintf(save, "%f\n", a.classeA);
     fprintf(save, "%f\n", a.classeB);
     fprintf(save, "%f\n", a.classeC);
+    fprintf(save, "%d\n", a.fosse);
+    fprintf(save, "%d %d %d\n", a.date.jour, a.date.mois, a.date.annee);
 
 
     fclose(save);
@@ -127,7 +130,8 @@ Salle lectureSave(char *nom){
     fscanf(save, "%f", &a.classeA);
     fscanf(save, "%f", &a.classeB);
     fscanf(save, "%f", &a.classeC);
-
+    fscanf(save, "%d", &a.fosse);
+    fscanf(save, "%d %d %d", &a.date.jour, &a.date.mois, &a.date.annee);
     fclose(save);
 
     return a;

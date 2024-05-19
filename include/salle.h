@@ -1,13 +1,17 @@
 #ifndef CYFEST_SALLE_H
 #define CYFEST_SALLE_H
 
-#include "place.h"
-
-typedef struct {
+typedef struct{
     int res;
     char classe;
     int code;
 }Place;
+
+typedef struct{
+    int jour;
+    int mois;
+    int annee;
+}date;
 
 typedef struct{
     char *nom;                      //nom de la salle
@@ -21,6 +25,7 @@ typedef struct{
     float classeC;                  //prix des sièges de classe C
     char *artiste;                  //nom de l'artiste jouant dans la salle
     int fosse;                      //présence d'un fosse pour ce concert
+    date date;
 }Salle;
 
 

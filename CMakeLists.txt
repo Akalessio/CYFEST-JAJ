@@ -13,4 +13,4 @@ add_executable(CYFEST main.c
         savefile.c
         include/savefile.h
         place.c
-        place.h)
+        include/place.h)

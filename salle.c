@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "fonx.h"
+#include "place.h"
 
 
 
@@ -11,10 +12,18 @@
 
 Salle creerSalle(void) {                                                                                                 
     Salle a;
-    char chaine[50];                                                                                                    
+    char chaine[50];
+    char *res = NULL;
+    int ress;
+    int str;
 
-    printf("entrez le nom de la salle\n");
-    fgets(chaine, 49, stdin);
+    while (res == NULL) {
+        printf("entrez le nom de la salle\n");
+        getchar();
+        res = fgets(chaine, 49, stdin);
+        str = strlen(chaine);
+        chaine[str-1] = '\0';
+    }
 
     int b = (int)strlen(chaine) + 1;
     a.nom = NULL;
@@ -28,13 +37,15 @@ Salle creerSalle(void) {
         exit(1);
     }
 
+    verifNom(chaine);
+
     for (int i = 0; i < b; ++i) {                                                                                       
         *(a.nom + i) = chaine[i];
         *(a.nomFichier + i) = chaine[i];
     }
 
     a.nomFichier[b - 1] = '.';
-    a.nomFichier[b] = 'S';
+    a.nomFichier[b ] = 'S';
     a.nomFichier[b + 1] = 'A';
     a.nomFichier[b + 2] = 'L';
     a.nomFichier[b + 3] = 'L';
@@ -47,17 +58,26 @@ Salle creerSalle(void) {
     a.nomFichier[b + 10] = chaine[b - 1];
 
     a.siege = -1;                                                                                                       
+    ress = -1;
 
-    while (a.siege <= 0) {
+    while (a.siege <= 0 || ress != 1) {
         printf("combien de sieges dans votre salle\n");
-        scanf("%d", &a.siege);
+        ress = scanf("%d", &a.siege);
+
+        if (ress != 1) {
+            while (getchar() != '\n');
+        }
     }
 
     int r = -1;                                                                                                         
-
-    while (r <= 0) {
+    ress = -1;
+    while (r <= 0 || ress !=1){
         printf("combien de rangees de sieges dans votre salle\n");
-        scanf("%d", &r);
+        ress = scanf("%d", &r);
+
+        if (ress != 1) {
+            while (getchar() != '\n');
+        }
     }
 
     a.taille = NULL;                                                                                                    
@@ -81,33 +101,75 @@ Salle creerSalle(void) {
     int x = -1;
     Place y;
     int z = 0;
+    a.fosse = -1;
+    ress = -1;
+
+    while (ress != 1 || a.fosse < 1 || a.fosse > 2){
+        printf("y a t'il une fosse durant ce concert\n1) oui\n2) non\n");
+        ress = scanf("%d", &a.fosse);
+
+        if (ress != 1) {
+            while (getchar() != '\n');
+        }
+    }
 
     for (int i = 1; i < r + 1; ++i) {
-
-        while (l < 0) {
+    ress = -1;
+        while (l < 0 || ress != 1) {
             printf("combien de sieges a la range num %d\n", i);
-            scanf("%d", &l);
+            ress = scanf("%d", &l);
+
+            if (ress != 1) {
+                while (getchar() != '\n');
+            }
+        }
+        ress = -1;
+        x = -1;
+        while (ress != 1 || x < 1 || x > 3) {
+            printf("qu'elle est la categorie de place de cette rangée\n1) Classe A\n2) Classe B\nClasse C\n");
+            ress = scanf("%d", &x);
+
+            if (ress != 1) {
+                while (getchar() != '\n');
+            }
         }
 
-        *(a.arr + i - 1) = NULL;
-        *(a.arr + i - 1) = malloc(sizeof(Place) * l);                                         
-        
-        if (*(a.arr + i - 1) == NULL) {
-            printf("erreur lors de l'allocation\n");
-            exit(1);
-        }
-
-        printf("qu'elle est la categorie de place de cette rangée\n");
-        scanf("%d", &x);
         y = creerPlace(x);
 
-        for (int j = 0; j < l; ++j) {
-            a.arr[i - 1][j] = y;
+        if(x != 1 || a.fosse == 0) {
+            *(a.arr + i - 1) = NULL;
+            *(a.arr + i - 1) = malloc(sizeof(Place) * l);
+
+            if (*(a.arr + i - 1) == NULL) {
+                printf("erreur lors de l'allocation\n");
+                exit(1);
+            }
+
+            for (int j = 0; j < l; ++j) {
+                a.arr[i - 1][j] = y;
+            }
+
+            a.taille[i] = l;
+            z = z + l;
+            l = -1;
+        } else if(x == 1 && a.fosse == 1){
+            *(a.arr + i - 1) = NULL;
+            *(a.arr + i - 1) = malloc(sizeof(Place) * l * 2);
+
+            if (*(a.arr + i - 1) == NULL) {
+                printf("erreur lors de l'allocation\n");
+                exit(1);
+            }
+
+            for (int j = 0; j < l * 2; ++j) {
+                a.arr[i - 1][j] = y;
+            }
+
+            a.taille[i] = 2*l;
+            z = z + 2*l;
+            l = -1;
         }
 
-        a.taille[i] = l;
-        z = z + l;
-        l = -1;
     }
     printf("quel est le prix d'une place de classe 1\n");
     scanf("%f", &a.classeA);
@@ -121,12 +183,103 @@ Salle creerSalle(void) {
         freeSalle(a);
         a = creerSalle();
     }
+    ress = 0;
+    a.date.jour = 0;
+    a.date.mois = 0;
+    a.date.annee = 0;
+    int ressj = -1, ressm = -1, ressa = -1;
+    while(ress != 3){
+        while (ressa != 1 || a.date.annee < 2024){
+            printf("entrez l'année du concert\n");
+            ressa = scanf("%d", &a.date.annee);
+            if (ressa != 1) {
+                while (getchar() != '\n');
+            }
+        }
+
+        ress++;
+        if((a.date.annee % 4 == 0 && a.date.annee % 100 != 0) || (a.date.annee % 400 == 0)){
+            while (ressm != 1 || a.date.mois < 1 || a.date.mois > 12){
+                printf("entrez le mois du concert\n");
+                ressm = scanf("%d", &a.date.mois);
+                if (ressm != 1) {
+                    while (getchar() != '\n');
+                }
+            }
+            ress++;
+            if(a.date.mois == 1 || a.date.mois == 3 || a.date.mois == 5 || a.date.mois == 7 || a.date.mois == 8 || a.date.mois == 10 || a.date.mois == 12){
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 31){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            } else if(a.date.mois == 4 || a.date.mois == 6 || a.date.mois == 9 || a.date.mois == 11){
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 30){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            }else{
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 29){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            }
+        }else{
+            while (ressm != 1 || a.date.mois < 1 || a.date.mois > 12){
+                printf("entrez le mois du concert\n");
+                ressm = scanf("%d", &a.date.mois);
+                if (ressm != 1) {
+                    while (getchar() != '\n');
+                }
+            }
+            ress++;
+            if(a.date.mois == 1 || a.date.mois == 3 || a.date.mois == 5 || a.date.mois == 7 || a.date.mois == 8 || a.date.mois == 10 || a.date.mois == 12){
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 31){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            } else if(a.date.mois == 4 || a.date.mois == 6 || a.date.mois == 9 || a.date.mois == 11){
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 30){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            }else{
+                while(ressj != 1 || a.date.jour <1 || a.date.jour > 28){
+                    printf("entrez le jour du concert\n");
+                    ressj = scanf("%d", &a.date.jour);
+                    if (ressj != 1) {
+                        while (getchar() != '\n');
+                    }
+                }
+                ress++;
+            }
+        }
+    }
 
     return a;
 };
 
 void afficheSalle(Salle a) {
-    printf("nom de salle : %s\nnombre de siege de la salle : %d\nplan de la salle : \n", a.nom, a.siege, a.taille[0]);
+    printf("Nom de salle : %s\nNombre de siege libre de la salle : %d\nDate du concert : %d/%d/%d\nplan de la salle : \n", a.nom, a.siege - a.siegeres, a.date.jour, a.date.mois, a.date.annee);
 
     int l = plusGrand(a.taille, a.taille[0]);
     int d = 0;
@@ -143,11 +296,11 @@ void afficheSalle(Salle a) {
         for (int j = 0; j < a.taille[i + 1]; ++j) {
 
             if ((a.arr[i][j]).code == 0) {
-                printf("0 ");
+                printf("O ");
             } else if ((a.arr[i][j]).code == 1) {
                 printf("0 ");
             } else if ((a.arr[i][j]).code == 2) {
-                printf("0 ");
+                printf("8 ");
             } else if ((a.arr[i][j]).code == 3) {
                 printf("X ");
             } else if ((a.arr[i][j]).code == 4) {
@@ -156,9 +309,9 @@ void afficheSalle(Salle a) {
                 printf("X ");
             }
         }
-
         printf("\n");
     }
+    printf("\nLegende :\nClasse A (libre) : O\nClasse B (libre) : 0\nClasse C (libre) : 8\nClasse A (prise) : X\nClasse B (prise) : X\nClasse C (prise) : X\n");
 }
 
 void affichePlan(Salle a) {
