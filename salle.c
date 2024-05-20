@@ -19,7 +19,7 @@ Salle creerSalle(void) {
 
     while (res == NULL) {
         printf("entrez le nom de la salle\n");
-        getchar();
+        while (getchar() != '\n');
         res = fgets(chaine, 49, stdin);
         str = strlen(chaine);
         chaine[str-1] = '\0';
@@ -56,6 +56,8 @@ Salle creerSalle(void) {
     a.nomFichier[b + 8] = 'V';
     a.nomFichier[b + 9] = 'E';
     a.nomFichier[b + 10] = chaine[b - 1];
+
+    a.nom[b-1] = '\0';
 
     a.siege = -1;                                                                                                       
     ress = -1;
@@ -267,19 +269,47 @@ Salle creerSalle(void) {
                     printf("entrez le jour du concert\n");
                     ressj = scanf("%d", &a.date.jour);
                     if (ressj != 1) {
-                        while (getchar() != '\n');
+
                     }
                 }
                 ress++;
             }
         }
     }
+    ress = -1;
+    char test[50];
+    int l1;
+
+        printf("quel est le nom de l'artiste\n");
+        while (getchar() != '\n');
+
+        fgets(test, 49, stdin);
+        l1 = strlen(test);
+
+        a.artiste = malloc(l1);
+        verifAlloc(a.artiste);
+
+        for (int i = 0; i < l1; ++i) {
+            a.artiste[i] = test[i];
+        }
+        a.artiste[l1 -1] = '\0';
+
+        if (ress != 1) {
+            while (getchar() != '\n');
+        }
+
+        printf("%s\n", a.artiste);
+
 
     return a;
 };
 
 void afficheSalle(Salle a) {
-    printf("Nom de salle : %s\nNombre de siege libre de la salle : %d\nDate du concert : %d/%d/%d\nplan de la salle : \n", a.nom, a.siege - a.siegeres, a.date.jour, a.date.mois, a.date.annee);
+    printf("Nom de salle : %s\nNombre de siege libre de la salle : %d\nDate du concert : %d/%d/%d\nil s'agit d'un concert de %s\nplan de la salle : \n", a.nom, a.siege - a.siegeres, a.date.jour, a.date.mois, a.date.annee, a.artiste);
+
+    if(a.fosse == 1){
+        printf("il y a une fosse lors de ce concert\n");
+    }
 
     int l = plusGrand(a.taille, a.taille[0]);
     int d = 0;
@@ -312,7 +342,9 @@ void afficheSalle(Salle a) {
         printf("\n");
     }
     printf("\nLegende :\nClasse A (libre) : O\nClasse B (libre) : 0\nClasse C (libre) : 8\nClasse A (prise) : X\nClasse B (prise) : X\nClasse C (prise) : X\n");
+    printf("\n");
 }
+
 
 void affichePlan(Salle a) {
     printf("plan de la salle : \n", a.nom, a.siege, a.taille[0]);
@@ -332,11 +364,11 @@ void affichePlan(Salle a) {
         for (int j = 0; j < a.taille[i + 1]; ++j) {
 
             if ((a.arr[i][j]).code == 0) {
-                printf("0 ");
+                printf("O ");
             } else if ((a.arr[i][j]).code == 1) {
                 printf("0 ");
             } else if ((a.arr[i][j]).code == 2) {
-                printf("0 ");
+                printf("8 ");
             } else if ((a.arr[i][j]).code == 3) {
                 printf("X ");
             } else if ((a.arr[i][j]).code == 4) {

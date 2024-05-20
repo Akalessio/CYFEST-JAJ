@@ -67,7 +67,8 @@ void saveSalle(Salle a){
     fprintf(save, "%f\n", a.classeC);
     fprintf(save, "%d\n", a.fosse);
     fprintf(save, "%d %d %d\n", a.date.jour, a.date.mois, a.date.annee);
-
+    fputs(a.artiste, save);
+    fputc('\n', save);
     verifSauvegarde(a.nomFichier);
 
     fclose(save);
@@ -163,6 +164,18 @@ Salle lectureSave(char *nom){
     fscanf(save, "%f", &a.classeC);
     fscanf(save, "%d", &a.fosse);
     fscanf(save, "%d %d %d", &a.date.jour, &a.date.mois, &a.date.annee);
+    fgetc(save);
+    fgets(b, 49, save);
+    c = strlen(b);
+
+    a.artiste = malloc(c);
+    verifAlloc(a.artiste);
+
+    for (int i = 0; i < c; ++i) {
+        a.artiste[i] = b[i];
+    }
+    a.artiste[c-1] = '\0';
+
     fclose(save);
 
     return a;

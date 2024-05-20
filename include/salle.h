@@ -11,7 +11,7 @@ typedef struct{
     int jour;
     int mois;
     int annee;
-}date;
+}Date;
 
 typedef struct{
     char *nom;                      //nom de la salle
@@ -25,7 +25,7 @@ typedef struct{
     float classeC;                  //prix des sièges de classe C
     char *artiste;                  //nom de l'artiste jouant dans la salle
     int fosse;                      //présence d'un fosse pour ce concert
-    date date;
+    Date date;
 }Salle;
 
 
