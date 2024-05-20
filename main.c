@@ -138,6 +138,10 @@ int main() {
                 if (res1 != 1) {
                     while (getchar() != '\n');
                 }
+
+                if(c1 == 1){
+                
+                }
             }
         }
     }

@@ -136,7 +136,7 @@ Salle creerSalle(void) {
 
         y = creerPlace(x);
 
-        if(x != 1 || a.fosse == 0) {
+        if(x != 1 || a.fosse == 2) {
             *(a.arr + i - 1) = NULL;
             *(a.arr + i - 1) = malloc(sizeof(Place) * l);
 

@@ -7,4 +7,6 @@ void saveSalle(Salle);
 
 Salle lectureSave(char *);
 
+void verifSauvegarde(char *);
+
 #endif

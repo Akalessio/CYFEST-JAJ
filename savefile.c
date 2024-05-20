@@ -6,6 +6,36 @@
 #include "fonx.h"
 #include "place.h"
 
+void verifSauvegarde(char *nom){
+    FILE *fichier;
+    fichier = fopen("sauvegarde.txt", "r+");
+
+    if(fichier == NULL){
+        printf("erreur lors de l'ouverture du fichier");
+        exit(2);
+    }
+
+    char save[50];
+    int c = 0;
+
+    while(fgets(save, 49, fichier)){
+        save[strcspn(save, "\n")] = '\0';
+
+        if(strcmp(save, nom) == 0){
+            c++;
+            break;
+        }
+    }
+
+    if(c == 0){
+        fseek(fichier, 0, SEEK_END);
+        fputs(nom, fichier);
+        fputc('\n', fichier);
+    }
+
+    fclose(fichier);
+}
+
 void saveSalle(Salle a){
     FILE *save = NULL;
     save = fopen(a.nomFichier, "w");
@@ -38,6 +68,7 @@ void saveSalle(Salle a){
     fprintf(save, "%d\n", a.fosse);
     fprintf(save, "%d %d %d\n", a.date.jour, a.date.mois, a.date.annee);
 
+    verifSauvegarde(a.nomFichier);
 
     fclose(save);
 }
