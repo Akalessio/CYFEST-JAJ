@@ -37,6 +37,7 @@ void verifSauvegarde(char *nom){
 }
 
 void saveSalle(Salle a){
+    a = comptePlace(a);
     FILE *save = NULL;
     save = fopen(a.nomFichier, "w");
 
@@ -69,6 +70,7 @@ void saveSalle(Salle a){
     fprintf(save, "%d %d %d\n", a.date.jour, a.date.mois, a.date.annee);
     fputs(a.artiste, save);
     fputc('\n', save);
+    fprintf(save, "%d %d %d %d %d %d", a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5]);
     verifSauvegarde(a.nomFichier);
 
     fclose(save);
@@ -166,6 +168,7 @@ Salle lectureSave(char *nom){
     fscanf(save, "%d %d %d", &a.date.jour, &a.date.mois, &a.date.annee);
     fgetc(save);
     fgets(b, 49, save);
+    fscanf(save, "%d %d %d %d %d %d", &a.places[0], &a.places[1], &a.places[2], &a.places[3], &a.places[4], &a.places[5]);
     c = strlen(b);
 
     a.artiste = malloc(c);
@@ -177,6 +180,7 @@ Salle lectureSave(char *nom){
     a.artiste[c-1] = '\0';
 
     fclose(save);
+    a = verifSiege(a);
 
     return a;
 }

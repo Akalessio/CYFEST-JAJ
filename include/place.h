@@ -12,5 +12,6 @@ void devPlace(Place *);
 Salle verifSiege(Salle);
 Salle actualiseSiege(Salle);
 Salle reservePlace(Salle);
+Salle comptePlace(Salle);
 
 #endif //CYFEST_PLACE_H

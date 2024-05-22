@@ -8,5 +8,7 @@ void verifAlloc(void *);
 void manage(void);
 void festival(void);
 void verifNom(char *);
+void afficheSauvegarde(void);
+
 
 #endif

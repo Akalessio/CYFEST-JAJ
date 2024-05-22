@@ -87,9 +87,10 @@ Salle verifSiege(Salle a) {
 }
 
 Salle reservePlace(Salle a) {
-
+    int res = -1;
+    int c = -1;
     affichePlan(a);
-    a = verifSiege(a);
+    a = comptePlace(a);
 
     int p = -1;
 
@@ -101,6 +102,51 @@ Salle reservePlace(Salle a) {
     }
 
     for (int i = 0; i < p; ++i) {
+        res = -1;
+        v = -1;
+        printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+
+        if(a.fosse == 1 && a.places[0] != 0) {
+            while (res != 1 || c < 1 || c > 2) {
+
+                printf("voulez vous une place en fosse\n1) oui\n2) non\n");
+                res = scanf("%d", &c);
+
+                if(res != 1){
+                    while (getchar() != '\n');
+                }
+            }
+            res = -1;
+            if(c == 1){
+                printf("le prix d'une place en fosse est de %fe", a.classeA);
+
+                while (res != 1 || v != 0 && v != 1) {
+                    printf("etes vous sur de vouloir reserver cette place\n1) oui\n0) non\n");
+                    res = scanf("%d", &v);
+
+                    if(res != 1){
+                        while (getchar() != '\n');
+                    }
+
+                    if (v == 1) {
+                        for (int j = 1; j < a.taille[0]+1; ++j) {
+                            for (int k = 0; k < a.taille[j]; ++k) {
+                                if(a.arr[i-1][j].res != 1){
+                                    a.arr[i-1][j].res = 1;
+                                    j=a.taille[0]+3;
+                                }
+                            }
+                        }
+                        continue;
+                    }
+                    if (v == 0) {
+                        i--;
+                        continue;
+                    }
+                }
+
+            }
+        }
         v = -1;
         r = -1;
         l = -1;
@@ -127,10 +173,10 @@ Salle reservePlace(Salle a) {
         } else if (a.arr[r - 1][l - 1].classe == 'C') {
             printf("le prix de la place est de %fe\n", a.classeC);
         }
-
-        while (v != 0 && v != 1) {
+        res = -1;
+        while (res != 1 || v != 0 && v != 1) {
             printf("etes vous sur de vouloir reserver cette place\n1 pour oui\n0 pour non\n");
-            scanf("%d", &v);
+            res = scanf("%d", &v);
 
             if (v == 1) {
                 a.arr[r - 1][l - 1].res = 1;
@@ -143,6 +189,7 @@ Salle reservePlace(Salle a) {
 
     }
     actualiseSiege(a);
+    a = verifSiege(a);
     return a;
 }
 
@@ -165,5 +212,34 @@ Salle actualiseSiege(Salle a) {
             }
         }
     }
+    return a;
+}
+
+Salle comptePlace(Salle a){
+    a.places[0] = 0;
+    a.places[1] = 0;
+    a.places[2] = 0;
+    a.places[3] = 0;
+    a.places[4] = 0;
+    a.places[5] = 0;
+
+    for (int i = 1; i < a.taille[0]+1; ++i) {
+        for (int j = 0; j < a.taille[i]; ++j) {
+            if(a.arr[i-1][j].code == 0){
+                a.places[0]++;
+            }if(a.arr[i-1][j].code == 1){
+                a.places[1]++;
+            }if(a.arr[i-1][j].code == 2){
+                a.places[2]++;
+            }if(a.arr[i-1][j].code == 3){
+                a.places[3]++;
+            }if(a.arr[i-1][j].code == 4){
+                a.places[4]++;
+            }if(a.arr[i-1][j].code == 5){
+                a.places[5]++;
+            }
+        }
+    }
+
     return a;
 }

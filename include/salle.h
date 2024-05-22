@@ -26,12 +26,13 @@ typedef struct{
     char *artiste;                  //nom de l'artiste jouant dans la salle
     int fosse;                      //présence d'un fosse pour ce concert
     Date date;
+    int places[6];
 }Salle;
 
 
 
 Salle creerSalle(void);
-void afficheSalle(Salle);
+void afficheSalle(Salle, int);
 void freeSalle(Salle);
 void affichePlan(Salle);
 Salle modifSalle(Salle, char *);

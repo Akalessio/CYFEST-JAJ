@@ -10,7 +10,7 @@
 
 
 
-Salle creerSalle(void) {                                                                                                 
+Salle creerSalle(void) {
     Salle a;
     char chaine[50];
     char *res = NULL;
@@ -19,15 +19,19 @@ Salle creerSalle(void) {
 
     while (res == NULL) {
         printf("entrez le nom de la salle\n");
+
         while (getchar() != '\n');
+
         res = fgets(chaine, 49, stdin);
+
         str = strlen(chaine);
+
         chaine[str-1] = '\0';
     }
 
-    int b = (int)strlen(chaine) + 1;
+    int b = str;
     a.nom = NULL;
-    a.nom = malloc(b);                                                                         
+    a.nom = malloc(b);
 
     a.nomFichier = NULL;
     a.nomFichier = malloc(b + 11);
@@ -39,7 +43,7 @@ Salle creerSalle(void) {
 
     verifNom(chaine);
 
-    for (int i = 0; i < b; ++i) {                                                                                       
+    for (int i = 0; i < b; ++i) {
         *(a.nom + i) = chaine[i];
         *(a.nomFichier + i) = chaine[i];
     }
@@ -59,7 +63,7 @@ Salle creerSalle(void) {
 
     a.nom[b-1] = '\0';
 
-    a.siege = -1;                                                                                                       
+    a.siege = -1;
     ress = -1;
 
     while (a.siege <= 0 || ress != 1) {
@@ -71,7 +75,7 @@ Salle creerSalle(void) {
         }
     }
 
-    int r = -1;                                                                                                         
+    int r = -1;
     ress = -1;
     while (r <= 0 || ress !=1){
         printf("combien de rangees de sieges dans votre salle\n");
@@ -82,7 +86,7 @@ Salle creerSalle(void) {
         }
     }
 
-    a.taille = NULL;                                                                                                    
+    a.taille = NULL;
     a.taille = calloc(r + 1, sizeof(int));
 
     if (a.taille == NULL) {
@@ -92,7 +96,7 @@ Salle creerSalle(void) {
 
     a.taille[0] = r;
 
-    a.arr = NULL;                                                                                                       
+    a.arr = NULL;
     a.arr = malloc(sizeof(Place *) * r);
 
     if (a.arr == NULL) {
@@ -107,13 +111,44 @@ Salle creerSalle(void) {
     ress = -1;
 
     while (ress != 1 || a.fosse < 1 || a.fosse > 2){
-        printf("y a t'il une fosse durant ce concert\n1) oui\n2) non\n");
+        printf("y a t'il une fosse durant ce concert\n1) oui\n2) non\n(les rangees en classe A auront le double de siège)\n");
         ress = scanf("%d", &a.fosse);
 
         if (ress != 1) {
             while (getchar() != '\n');
         }
     }
+    ress = -1;
+    x = -1;
+    int x1 = -1;
+
+    while (ress != 1 || x > a.taille[0]) {
+        printf("combien de rangees de classe A\n");
+        ress = scanf("%d", &x);
+
+        if (ress != 1) {
+            while (getchar() != '\n');
+        }
+        if(x > a.taille[0]){
+            printf("il y a %d rangees, vous depassez le maximum possible\n", a.taille[0]);
+        }
+    }
+
+    ress = -1;
+    if(x != a.taille[0]){
+        while (ress != 1 || x1 > a.taille[0] - x) {
+            printf("combien de rangees de classe B\n");
+            ress = scanf("%d", &x1);
+
+            if (ress != 1) {
+                while (getchar() != '\n');
+            }
+            if(x1 > a.taille[0]){
+                printf("il y a %d rangees restantes, vous depassez le maximum possible\n", a.taille[0]-x);
+            }
+        }
+    }
+
 
     for (int i = 1; i < r + 1; ++i) {
     ress = -1;
@@ -125,20 +160,16 @@ Salle creerSalle(void) {
                 while (getchar() != '\n');
             }
         }
-        ress = -1;
-        x = -1;
-        while (ress != 1 || x < 1 || x > 3) {
-            printf("qu'elle est la categorie de place de cette rangée\n1) Classe A\n2) Classe B\nClasse C\n");
-            ress = scanf("%d", &x);
 
-            if (ress != 1) {
-                while (getchar() != '\n');
-            }
+        if(i<=x) {
+            y = creerPlace(1);
+        } else if(i > x && i <= (x + x1)){
+            y = creerPlace(2);
+        } else{
+            y = creerPlace(3);
         }
 
-        y = creerPlace(x);
-
-        if(x != 1 || a.fosse == 2) {
+        if(i > x || a.fosse == 2) {
             *(a.arr + i - 1) = NULL;
             *(a.arr + i - 1) = malloc(sizeof(Place) * l);
 
@@ -154,7 +185,7 @@ Salle creerSalle(void) {
             a.taille[i] = l;
             z = z + l;
             l = -1;
-        } else if(x == 1 && a.fosse == 1){
+        } else if(i <= x && a.fosse == 1){
             *(a.arr + i - 1) = NULL;
             *(a.arr + i - 1) = malloc(sizeof(Place) * l * 2);
 
@@ -279,11 +310,13 @@ Salle creerSalle(void) {
     ress = -1;
     char test[50];
     int l1;
+    char* testc = NULL;
 
+    while (testc == NULL) {
         printf("quel est le nom de l'artiste\n");
         while (getchar() != '\n');
 
-        fgets(test, 49, stdin);
+        testc = fgets(test, 49, stdin);
         l1 = strlen(test);
 
         a.artiste = malloc(l1);
@@ -292,25 +325,39 @@ Salle creerSalle(void) {
         for (int i = 0; i < l1; ++i) {
             a.artiste[i] = test[i];
         }
-        a.artiste[l1 -1] = '\0';
+        a.artiste[l1 - 1] = '\0';
 
         if (ress != 1) {
             while (getchar() != '\n');
         }
-
-        printf("%s\n", a.artiste);
-
-
+    }
     return a;
 };
 
-void afficheSalle(Salle a) {
-    printf("Nom de salle : %s\nNombre de siege libre de la salle : %d\nDate du concert : %d/%d/%d\nil s'agit d'un concert de %s\nplan de la salle : \n", a.nom, a.siege - a.siegeres, a.date.jour, a.date.mois, a.date.annee, a.artiste);
+void afficheSalle(Salle a, int cle) {
+
+    char *suffix = ".SALLESAUVE";
+    char aff[50] = "";
+    strncpy(aff, a.nomFichier, 49);
+    char *pos = strstr(aff, suffix);
+
+    if (pos != NULL) {
+        *pos = '\0';
+    }
+
+    printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    a=comptePlace(a);
+    printf("Nom de salle : %s\nNombre de siege libre de la salle : %d\nDate du concert : %d/%d/%d\nil s'agit d'un concert de %s\n", aff, (int)(a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
+    if(cle == 0){
+        printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\nil y a %d places reservees de classe A\nil y a %d places reservees de classe B\nil y a %d places reservees de classe C\n", a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5]);
+    } else{
+        printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+    }
 
     if(a.fosse == 1){
         printf("il y a une fosse lors de ce concert\n");
     }
-
+    printf("\nplan de la salle : \n");
     int l = plusGrand(a.taille, a.taille[0]);
     int d = 0;
 
@@ -343,6 +390,7 @@ void afficheSalle(Salle a) {
     }
     printf("\nLegende :\nClasse A (libre) : O\nClasse B (libre) : 0\nClasse C (libre) : 8\nClasse A (prise) : X\nClasse B (prise) : X\nClasse C (prise) : X\n");
     printf("\n");
+    printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
 

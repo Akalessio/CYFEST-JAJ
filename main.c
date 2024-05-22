@@ -21,6 +21,16 @@ void pauseTerminal() {
 }
 
 int main() {
+
+    if(fopen("sauvegarde.txt", "r") == NULL){
+        FILE *savetxt = fopen("sauvegarde.txt", "w");
+        if(savetxt == NULL){
+            printf("erreur lors de l'ouverture du fichier");
+            exit(2);
+        }
+        fclose(savetxt);
+    }
+
     int c = -1;
     int c1 = -1;
     int c2 = -1;
@@ -32,6 +42,7 @@ int main() {
     Salle a;
     Date date;
     a.nom = NULL;
+    Salle k1 = {0};
 
     int ress = 0;
     date.jour = 0;
@@ -129,6 +140,7 @@ int main() {
 
 
     while (res != 1 || c != 3) {
+        a.nom = NULL;
         res = -1, c = -1, c1 = -1, res1 = -1, res2 = -1, c2 = -1;
         videTerminal();
         printf("1) mode manager\n2) mode festivalier\n3) quitter le programme\n");
@@ -140,6 +152,8 @@ int main() {
 
         if (c == 1) {
             while (res1 != 1 || c1 != 4) {
+                c1 = -1;
+                res1 = -1;
                 videTerminal();
                 manage();
                 printf("1) creer une salle\n2) modifier salle\n3) afficher une salle\n4) quitter le mode manager\n");
@@ -150,42 +164,19 @@ int main() {
                 }
 
                 if (c1 == 1) {
-                    while (c2 < 1 || c2 > 2) {
-                        videTerminal();
-                        manage();
-                        printf("1) creer une salle\n2) lire une sauvegarde de salle\n");
-                        res2 = scanf("%d", &c2);
+                    videTerminal();
+                    manage();
+                    a = creerSalle();
+                    saveSalle(a);
+                }
+                else if (c1 == 2) {
 
-                        if (res2 != 1) {
-                            while (getchar() != '\n');
-                        }
-                        if (c2 == 1) {
-                            a = creerSalle();
-                            saveSalle(a);
-                        } else if (c2 == 2) {
-                            a.nom = NULL;
-                            while (fopen(nom, "r") == NULL) {
-                                videTerminal();
-                                manage();
-                                printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
-                                fgetchar();
-                                fgets(nom, 49, stdin);
-                                str = strlen(nom);
-                                nom[str-1] = '\0';
-                                if (fopen(nom, "r") == NULL) {
-                                    printf("le nom du fichier que vous avez entre n'existe pas\n");
-                                }else{
-                                    a = lectureSave(nom);
-                                }
-                            }
-                        }
-                    }
-                } else if (c1 == 2) {
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
                             manage();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            afficheSauvegarde();
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -197,16 +188,19 @@ int main() {
                             }
                         }
                     }
+                    nom[0] = '\0';
                     videTerminal();
                     manage();
                     a = modifSalle(a, nom);
                     saveSalle(a);
                 } else if (c1 == 3) {
+
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
                             manage();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            afficheSauvegarde();
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -219,15 +213,19 @@ int main() {
                             }
                         }
                     }
+                    nom[0] = '\0';
                     videTerminal();
                     manage();
-                    afficheSalle(a);
+                    afficheSalle(a, 0);
                     pauseTerminal();
                     freeSalle(a);
                 }
             }
         } else if (c == 2) {
             while (res1 != 1 || c1 != 4) {
+                a.nom = NULL;
+                c1 = -1;
+                res1 = -1;
                 videTerminal();
                 festival();
                 printf("1) afficher les différentes salles\n2) reserver des places\n3) afficher une salle\n4) quitter le mode festivalier\n");
@@ -244,21 +242,76 @@ int main() {
                     char save[50];
                     Salle s;
                     FILE *fichier;
+
                     fichier = fopen("sauvegarde.txt", "r+");
                     if(fichier == NULL){
                         printf("erreur lors de l'ouverture du ficher\n");
                         exit(2);
                     }
+
                     while(fgets(save, 49, fichier)){
                         m++;
                         save[strcspn(save, "\n")] = '\0';
                         s = lectureSave(save);
-                        if((date.annee<=s.date.annee) || (date.annee == s.date.annee && date.mois <= s.date.mois) || (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)){
-                            afficheSalle(s);
+                        if((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois <  s.date.mois) || (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)){
+                            afficheSalle(s, 1);
                         }
                     }
                     pauseTerminal();
                     fclose(fichier);
+                }
+                else if(c1 == 2){
+                    if (a.nom == NULL) {
+                        while (fopen(nom, "r") == NULL) {
+                            videTerminal();
+                            manage();
+                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            afficheSauvegarde();
+                            fgetchar();
+                            fgets(nom, 49, stdin);
+                            str = strlen(nom);
+                            nom[str-1] = '\0';
+
+                            if (fopen(nom, "r") == NULL) {
+                                printf("le nom du fichier que vous avez entre n'existe pas\n");
+                            }else{
+                                a = lectureSave(nom);
+                            }
+                        }
+                    }
+                    videTerminal();
+                    festival();
+                    a = reservePlace(a);
+                    videTerminal();
+                    festival();
+                    afficheSalle(a, 1);
+                    pauseTerminal();
+                    nom[0] = '\0';
+                } else if(c1 == 3) {
+                    a.nom = NULL;
+                    if (a.nom == NULL) {
+                        while (fopen(nom, "r") == NULL) {
+                            videTerminal();
+                            festival();
+                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            afficheSauvegarde();
+                            fgetchar();
+                            fgets(nom, 49, stdin);
+                            str = strlen(nom);
+                            nom[str - 1] = '\0';
+
+                            if (fopen(nom, "r") == NULL) {
+                                printf("le nom du fichier que vous avez entre n'existe pas\n");
+                            } else {
+                                a = lectureSave(nom);
+                            }
+                        }
+                    }
+                    nom[0] = '\0';
+                    videTerminal();
+                    festival();
+                    afficheSalle(a, 1);
+                    pauseTerminal();
                 }
             }
         }

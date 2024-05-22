@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 int plusGrand(int *tab, int a){
     int b = -1;
     for (int i = 1; i < a; ++i) {
@@ -59,3 +60,23 @@ void verifNom(char *a){
         }
     }
 }
+
+void afficheSauvegarde(){
+    FILE *fichier;
+    fichier = fopen("sauvegarde.txt", "r");
+
+    if(fichier == NULL){
+        printf("erreur lors de l'ouverture du fichier");
+        exit(2);
+    }
+
+    char save[50];
+    int c = 0;
+    printf("les sauvegardes disponibles sont\n\n");
+
+    while(fgets(save, 49, fichier)) {
+        printf("%s\n", save);
+    }
+
+}
+
