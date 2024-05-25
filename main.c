@@ -2,7 +2,7 @@
 #include "salle.h"
 #include <string.h>
 #include <stdlib.h>
-#include "savefile.h"
+#include "sauvefichier.h"
 #include "place.h"
 #include "fonx.h"
 
@@ -19,10 +19,8 @@ int main() {
 
     int c = -1;
     int c1 = -1;
-    int c2 = -1;
     int res = -1;
     int res1 = -1;
-    int res2 = -1;
     char nom[50];
     int str;
     Salle a;
@@ -38,7 +36,7 @@ int main() {
 
     while(ress != 3){
         while (ressa != 1 || date.annee < 2024){
-            printf("entrez l'année actuelle\n");
+            printf("entrez l'annee actuelle\n");
             ressa = scanf("%d", &date.annee);
             if (ressa != 1) {
                 while (getchar() != '\n');
@@ -127,7 +125,7 @@ int main() {
 
     while (res != 1 || c != 3) {
         a.nom = NULL;
-        res = -1, c = -1, c1 = -1, res1 = -1, res2 = -1, c2 = -1;
+        res = -1, c = -1, c1 = -1, res1 = -1;
         videTerminal();
         printf("1) mode manager\n2) mode festivalier\n3) quitter le programme\n");
         res = scanf("%d", &c);
@@ -162,7 +160,7 @@ int main() {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
                             manage();
-                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
                             afficheSauvegarde(date, 0);
                             fgetchar();
                             fgets(nom, 49, stdin);
@@ -187,7 +185,7 @@ int main() {
                             freeSalle(a);
                         }   videTerminal();
                             manage();
-                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
                             afficheSauvegarde(date , 0);
                             fgetchar();
                             fgets(nom, 49, stdin);
@@ -218,7 +216,7 @@ int main() {
                 res1 = -1;
                 videTerminal();
                 festival();
-                printf("1) afficher les différentes salles\n2) reserver des places\n3) afficher une salle\n4) quitter le mode festivalier\n");
+                printf("1) afficher les differentes salles\n2) reserver des places\n3) afficher une salle\n4) quitter le mode festivalier\n");
                 res1 = scanf("%d", &c1);
 
                 if (res1 != 1) {
@@ -255,7 +253,7 @@ int main() {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
                             festival();
-                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
                             afficheSauvegarde(date, 1);
                             fgetchar();
                             fgets(nom, 49, stdin);
@@ -285,7 +283,7 @@ int main() {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
                             festival();
-                            printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
+                            printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
                             afficheSauvegarde(date, 1);
                             fgetchar();
                             fgets(nom, 49, stdin);

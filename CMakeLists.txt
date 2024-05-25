@@ -10,7 +10,7 @@ add_executable(CYFEST main.c
         include/salle.h
         fonx.c
         include/fonx.h
-        savefile.c
-        include/savefile.h
+        sauvefichier.c
+        include/sauvefichier.h
         place.c
         include/place.h)
