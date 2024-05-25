@@ -176,10 +176,10 @@ int main() {
                     videTerminal();
                     manage();
                     a = modifSalle(a, date);
-                    remove(nom);
                     pauseTerminal();
                     nom[0] = '\0';
                     sauveSalle(a);
+                    remove(nom);
                 } else if (c1 == 3) {
                     while (fopen(nom, "r") == NULL) {
                         if(a.nom != NULL){
