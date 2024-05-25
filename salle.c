@@ -6,10 +6,6 @@
 #include "place.h"
 
 
-
-
-
-
 // Cette fonction crée une nouvelle salle en demandant à l'utilisateur de fournir les informations nécessaires.
 Salle creerSalle(void) {
     Salle a;
@@ -378,13 +374,16 @@ void afficheSalle(Salle a, int cle) {
     // Affichage des informations générales sur la salle et le concert
     printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
     a = comptePlace(a);
-    printf("Nom de salle : %s\nNombre de sièges libres de la salle : %d\nDate du concert : %d/%d/%d\nIl s'agit d'un concert de %s\n", aff, (int)(a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
+    printf("Nom de salle : %s\nNombre de sièges libres de la salle : %d\nDate du concert : %d/%d/%d\nIl s'agit d'un concert de %s\n",
+           aff, (int) (a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
 
     // Affichage du nombre de places libres et réservées selon la classe
     if (cle == 0) {
-        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\nIl y a %d places réservées de classe A\nIl y a %d places réservées de classe B\nIl y a %d places réservées de classe C\n", a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5]);
+        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\nIl y a %d places réservées de classe A\nIl y a %d places réservées de classe B\nIl y a %d places réservées de classe C\n",
+               a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5]);
     } else {
-        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\n",
+               a.places[0], a.places[1], a.places[2]);
     }
 
     // Affichage de la présence d'une fosse lors du concert
@@ -457,8 +456,10 @@ void affichePlan(Salle a) {
     // Affichage des informations générales sur la salle et le concert
     printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
     a = comptePlace(a);
-    printf("Nom de salle : %s\nNombre de sièges libres de la salle : %d\nDate du concert : %d/%d/%d\nIl s'agit d'un concert de %s\n", aff, (int)(a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
-    printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+    printf("Nom de salle : %s\nNombre de sièges libres de la salle : %d\nDate du concert : %d/%d/%d\nIl s'agit d'un concert de %s\n",
+           aff, (int) (a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
+    printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\n",
+           a.places[0], a.places[1], a.places[2]);
 
     // Affichage de la présence d'une fosse lors du concert
     if (a.fosse == 1) {
@@ -506,7 +507,8 @@ void affichePlan(Salle a) {
 
 Salle modifSalle(Salle a, Date date) {
     // Vérification si le concert a déjà eu lieu
-    if ((date.annee < a.date.annee) || (date.annee == a.date.annee && date.mois < a.date.mois) || (date.annee == a.date.annee && date.mois == a.date.mois && date.jour <= a.date.jour)) {
+    if ((date.annee < a.date.annee) || (date.annee == a.date.annee && date.mois < a.date.mois) ||
+        (date.annee == a.date.annee && date.mois == a.date.mois && date.jour <= a.date.jour)) {
         printf("le concert n'a pas encore eu lieu et ne peut pas etre modifie\n");
         return a;
     } else {
@@ -971,6 +973,6 @@ Salle modifSalle(Salle a, Date date) {
             }
         }
     }
-        return a;
-    }
+    return a;
+}
 

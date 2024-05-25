@@ -8,9 +8,9 @@
 
 int main() {
 
-    if(fopen("sauvegarde.txt", "r") == NULL){
+    if (fopen("sauvegarde.txt", "r") == NULL) {
         FILE *savetxt = fopen("sauvegarde.txt", "w");
-        if(savetxt == NULL){
+        if (savetxt == NULL) {
             printf("erreur lors de l'ouverture du fichier");
             exit(2);
         }
@@ -34,8 +34,8 @@ int main() {
     date.annee = 0;
     int ressj = -1, ressm = -1, ressa = -1;
 
-    while(ress != 3){
-        while (ressa != 1 || date.annee < 2024){
+    while (ress != 3) {
+        while (ressa != 1 || date.annee < 2024) {
             printf("entrez l'annee actuelle\n");
             ressa = scanf("%d", &date.annee);
             if (ressa != 1) {
@@ -44,8 +44,8 @@ int main() {
         }
 
         ress++;
-        if((date.annee % 4 == 0 && date.annee % 100 != 0) || (date.annee % 400 == 0)){
-            while (ressm != 1 || date.mois < 1 || date.mois > 12){
+        if ((date.annee % 4 == 0 && date.annee % 100 != 0) || (date.annee % 400 == 0)) {
+            while (ressm != 1 || date.mois < 1 || date.mois > 12) {
                 printf("entrez le mois actuel\n");
                 ressm = scanf("%d", &date.mois);
                 if (ressm != 1) {
@@ -53,8 +53,9 @@ int main() {
                 }
             }
             ress++;
-            if(date.mois == 1 || date.mois == 3 || date.mois == 5 || date.mois == 7 || date.mois == 8 || date.mois == 10 || date.mois == 12){
-                while(ressj != 1 || date.jour <1 || date.jour > 31){
+            if (date.mois == 1 || date.mois == 3 || date.mois == 5 || date.mois == 7 || date.mois == 8 ||
+                date.mois == 10 || date.mois == 12) {
+                while (ressj != 1 || date.jour < 1 || date.jour > 31) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -62,8 +63,8 @@ int main() {
                     }
                 }
                 ress++;
-            } else if(date.mois == 4 || date.mois == 6 || date.mois == 9 || date.mois == 11){
-                while(ressj != 1 || date.jour <1 || date.jour > 30){
+            } else if (date.mois == 4 || date.mois == 6 || date.mois == 9 || date.mois == 11) {
+                while (ressj != 1 || date.jour < 1 || date.jour > 30) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -71,8 +72,8 @@ int main() {
                     }
                 }
                 ress++;
-            }else{
-                while(ressj != 1 || date.jour <1 || date.jour > 29){
+            } else {
+                while (ressj != 1 || date.jour < 1 || date.jour > 29) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -81,8 +82,8 @@ int main() {
                 }
                 ress++;
             }
-        }else{
-            while (ressm != 1 || date.mois < 1 || date.mois > 12){
+        } else {
+            while (ressm != 1 || date.mois < 1 || date.mois > 12) {
                 printf("entrez le mois actuel\n");
                 ressm = scanf("%d", &date.mois);
                 if (ressm != 1) {
@@ -90,8 +91,9 @@ int main() {
                 }
             }
             ress++;
-            if(date.mois == 1 || date.mois == 3 || date.mois == 5 || date.mois == 7 || date.mois == 8 || date.mois == 10 || date.mois == 12){
-                while(ressj != 1 || date.jour <1 || date.jour > 31){
+            if (date.mois == 1 || date.mois == 3 || date.mois == 5 || date.mois == 7 || date.mois == 8 ||
+                date.mois == 10 || date.mois == 12) {
+                while (ressj != 1 || date.jour < 1 || date.jour > 31) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -99,8 +101,8 @@ int main() {
                     }
                 }
                 ress++;
-            } else if(date.mois == 4 || date.mois == 6 || date.mois == 9 || date.mois == 11){
-                while(ressj != 1 || date.jour <1 || date.jour > 30){
+            } else if (date.mois == 4 || date.mois == 6 || date.mois == 9 || date.mois == 11) {
+                while (ressj != 1 || date.jour < 1 || date.jour > 30) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -108,8 +110,8 @@ int main() {
                     }
                 }
                 ress++;
-            }else{
-                while(ressj != 1 || date.jour <1 || date.jour > 28){
+            } else {
+                while (ressj != 1 || date.jour < 1 || date.jour > 28) {
                     printf("entrez le jour actuel\n");
                     ressj = scanf("%d", &date.jour);
                     if (ressj != 1) {
@@ -120,7 +122,6 @@ int main() {
             }
         }
     }
-
 
 
     while (res != 1 || c != 3) {
@@ -153,8 +154,7 @@ int main() {
                     manage();
                     a = creerSalle();
                     sauveSalle(a);
-                }
-                else if (c1 == 2) {
+                } else if (c1 == 2) {
 
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {
@@ -165,10 +165,10 @@ int main() {
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
-                            nom[str-1] = '\0';
+                            nom[str - 1] = '\0';
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
-                            }else{
+                            } else {
                                 a = lectureSauve(nom);
                             }
                         }
@@ -182,22 +182,23 @@ int main() {
                     remove(nom);
                 } else if (c1 == 3) {
                     while (fopen(nom, "r") == NULL) {
-                        if(a.nom != NULL){
+                        if (a.nom != NULL) {
                             freeSalle(a);
-                        }   videTerminal();
-                            manage();
-                            printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
-                            afficheSauvegarde(date , 0);
-                            fgetchar();
-                            fgets(nom, 49, stdin);
-                            str = strlen(nom);
-                            nom[str-1] = '\0';
+                        }
+                        videTerminal();
+                        manage();
+                        printf("entrez le nom du fichier de sauvegarde (avec l'extension .SALLESAUVE)\n");
+                        afficheSauvegarde(date, 0);
+                        fgetchar();
+                        fgets(nom, 49, stdin);
+                        str = strlen(nom);
+                        nom[str - 1] = '\0';
 
-                            if (fopen(nom, "r") == NULL) {
-                                printf("le nom du fichier que vous avez entre n'existe pas\n");
-                            }else{
-                                a = lectureSauve(nom);
-                            }
+                        if (fopen(nom, "r") == NULL) {
+                            printf("le nom du fichier que vous avez entre n'existe pas\n");
+                        } else {
+                            a = lectureSauve(nom);
+                        }
                     }
 
                     nom[0] = '\0';
@@ -209,7 +210,7 @@ int main() {
                 }
             }
         }
-        //==================================================================================================================================================================================================
+            //==================================================================================================================================================================================================
         else if (c == 2) {
             while (res1 != 1 || c1 != 4) {
                 a.nom = NULL;
@@ -224,7 +225,7 @@ int main() {
                     while (getchar() != '\n');
                 }
 
-                if(c1 == 1){
+                if (c1 == 1) {
                     videTerminal();
                     festival();
                     int m = 0;
@@ -233,23 +234,23 @@ int main() {
                     FILE *fichier;
 
                     fichier = fopen("sauvegarde.txt", "r+");
-                    if(fichier == NULL){
+                    if (fichier == NULL) {
                         printf("erreur lors de l'ouverture du ficher\n");
                         exit(2);
                     }
 
-                    while(fgets(save, 49, fichier)){
+                    while (fgets(save, 49, fichier)) {
                         m++;
                         save[strcspn(save, "\n")] = '\0';
                         s = lectureSauve(save);
-                        if((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois <  s.date.mois) || (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)){
+                        if ((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois < s.date.mois) ||
+                            (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)) {
                             afficheSalle(s, 1);
                         }
                     }
                     pauseTerminal();
                     fclose(fichier);
-                }
-                else if(c1 == 2){
+                } else if (c1 == 2) {
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
@@ -259,12 +260,12 @@ int main() {
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
-                            nom[str-1] = '\0';
+                            nom[str - 1] = '\0';
 
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
                                 pauseTerminal();
-                            }else{
+                            } else {
                                 a = lectureSauve(nom);
                             }
                         }
@@ -278,7 +279,7 @@ int main() {
                     afficheSalle(a, 1);
                     pauseTerminal();
                     nom[0] = '\0';
-                } else if(c1 == 3) {
+                } else if (c1 == 3) {
                     a.nom = NULL;
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {

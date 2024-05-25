@@ -6,10 +6,10 @@
 #include "sauvefichier.h"
 
 
-int plusGrand(int *tab, int a){
+int plusGrand(int *tab, int a) {
     int b = -1; // Initialisation de la variable pour stocker le plus grand élément
     for (int i = 1; i < a; ++i) { // Parcours du tableau à partir du deuxième élément
-        if(tab[i]>b){ // Si l'élément actuel est plus grand que b
+        if (tab[i] > b) { // Si l'élément actuel est plus grand que b
             b = tab[i]; // Mise à jour de b
         }
     }
@@ -17,53 +17,50 @@ int plusGrand(int *tab, int a){
 }
 
 // Fonction qui calcule le décalage entre deux valeurs a et b
-int decal(int a, int b){
-    if(a%2==0 && b%2==0){ // Si a et b sont pairs
-        return ((a/2)-(b/2));
-    }
-    else if(a%2==0 && b%2!=0){ // Si a est pair et b est impair
-        b=b/2;
+int decal(int a, int b) {
+    if (a % 2 == 0 && b % 2 == 0) { // Si a et b sont pairs
+        return ((a / 2) - (b / 2));
+    } else if (a % 2 == 0 && b % 2 != 0) { // Si a est pair et b est impair
+        b = b / 2;
         b++;
-        return ((a/2)-b);
-    }
-    else if(a%2!=0 && b%2==0){ // Si a est impair et b est pair
-        return (((a-1)/2)-((b)/2));
-    }
-    else{ // Si a et b sont impairs
-        return (((a-1)/2)-((b-1)/2));
+        return ((a / 2) - b);
+    } else if (a % 2 != 0 && b % 2 == 0) { // Si a est impair et b est pair
+        return (((a - 1) / 2) - ((b) / 2));
+    } else { // Si a et b sont impairs
+        return (((a - 1) / 2) - ((b - 1) / 2));
     }
 }
 
 // Fonction qui imprime des espaces pour décaler le texte
-void decalPrint(int a){
+void decalPrint(int a) {
     for (int i = 0; i < a; ++i) { // Boucle pour imprimer des espaces
         printf("  ");
     }
 }
 
 // Fonction qui vérifie l'allocation de la mémoire
-void verifAlloc(void *a){
-    if(a == NULL){ // Si l'allocation a échoué
+void verifAlloc(void *a) {
+    if (a == NULL) { // Si l'allocation a échoué
         printf("erreur lors de l'allocation\n");
         exit(1); // Quitte le programme avec un code d'erreur
     }
 }
 
 // Fonction qui affiche un message indiquant le mode manager
-void manage(void){
+void manage(void) {
     printf("Mode manager\n");
 }
 
 // Fonction qui affiche un message indiquant le mode festivalier
-void festival(void){
+void festival(void) {
     printf("Mode Festivalier\n");
 }
 
 // Fonction qui remplace les espaces dans une chaîne de caractères par des underscores
-void verifNom(char *a){
+void verifNom(char *a) {
     int str = strlen(a); // Obtient la longueur de la chaîne
     for (int i = 0; i < str; ++i) { // Parcours de la chaîne
-        if(a[i] == ' '){ // Si le caractère actuel est un espace
+        if (a[i] == ' ') { // Si le caractère actuel est un espace
             a[i] = '_'; // Remplace par un underscore
         }
     }

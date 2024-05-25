@@ -32,7 +32,7 @@ Place creerPlace(int a) {
             // Si la catégorie spécifiée n'est pas valide
         else {
             // Boucle tant que l'utilisateur ne saisit pas une catégorie valide
-            while(res != 1) {
+            while (res != 1) {
                 printf("entrez une categorie de siege disponible : 1, 2 ou 3\n");
                 res = scanf("%d", &a); // Saisie de la catégorie
                 // Si la saisie échoue, vide le tampon d'entrée
@@ -71,6 +71,7 @@ void devPlace(Place *a) {
         a->res = 1; // Réservée
     }
 }
+
 // Cette fonction vérifie le nombre de sièges réservés dans une salle et met à jour le compteur siegeres.
 // Elle prend en paramètre une salle.
 // Elle retourne la salle mise à jour.
@@ -113,13 +114,14 @@ Salle reservePlace(Salle a) {
     while (res != 1 || p <= 0 || p > a.siege - a.siegeres) {
         printf("combien de places voulez vous reservez\n");
         res = scanf("%d", &p);
-        if (res != 1){
+        if (res != 1) {
             while (getchar() != '\n');
         }
     }
 
     // Affiche le nombre de places disponibles par classe
-    printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+    printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n",
+           a.places[0], a.places[1], a.places[2]);
 
     // Variable pour contrôler la réservation de places en fosse
     int b = 0;
@@ -130,36 +132,36 @@ Salle reservePlace(Salle a) {
         v = -1;
 
         // Vérifie si la salle a des places en fosse disponibles
-        if(a.fosse == 1 && a.places[0] != 0) {
+        if (a.fosse == 1 && a.places[0] != 0) {
             while (res != 1 || c < 1 || c > 2) {
                 printf("voulez vous une place en fosse\n1) oui\n2) non\n");
                 res = scanf("%d", &c);
 
-                if(res != 1){
+                if (res != 1) {
                     while (getchar() != '\n');
                 }
             }
             res = -1;
-            if(c == 1){
+            if (c == 1) {
                 printf("le prix d'une place en fosse est de %fe", a.classeA);
                 while (res != 1 || (v != 0 && v != 1)) {
                     printf("etes vous sur de vouloir reserver cette place\n1) oui\n0) non\n");
                     res = scanf("%d", &v);
-                    if(res != 1){
+                    if (res != 1) {
                         while (getchar() != '\n');
                     }
 
                     // Réserve la place si l'utilisateur confirme
                     if (v == 1) {
-                        for (int j = 1; j < a.taille[0]+1; ++j) {
+                        for (int j = 1; j < a.taille[0] + 1; ++j) {
                             for (int k = 0; k < a.taille[j]; ++k) {
-                                if(a.arr[j-1][k].res != 1){
-                                    a.arr[j-1][k].res = 1;
+                                if (a.arr[j - 1][k].res != 1) {
+                                    a.arr[j - 1][k].res = 1;
                                     b = 1;
                                     break;
                                 }
                             }
-                            if(b == 1){
+                            if (b == 1) {
                                 break;
                             }
                         }
@@ -175,7 +177,7 @@ Salle reservePlace(Salle a) {
 
             }
         }
-        if(b == 1){
+        if (b == 1) {
             b = 0;
             continue;
         }
@@ -189,7 +191,7 @@ Salle reservePlace(Salle a) {
             printf("rentrez le numero de la rangee\n");
             res = scanf("%d", &r);
 
-            if(res != 1){
+            if (res != 1) {
                 while (getchar() != '\n');
             }
         }
@@ -199,7 +201,7 @@ Salle reservePlace(Salle a) {
         while (res != 1 || l > a.taille[r] || l <= 0) {
             printf("rentrez le numero de la ligne\n");
             res = scanf("%d", &l);
-            if(res != 1){
+            if (res != 1) {
                 while (getchar() != '\n');
             }
         }
@@ -225,7 +227,7 @@ Salle reservePlace(Salle a) {
         while (res != 1 || v != 0 && v != 1) {
             printf("etes vous sur de vouloir reserver cette place\n1 pour oui\n0 pour non\n");
             res = scanf("%d", &v);
-            if (res != 1){
+            if (res != 1) {
                 while (getchar() != '\n');
             }
         }
@@ -287,7 +289,7 @@ Salle actualiseSiege(Salle a) {
 // Cette fonction compte le nombre de places disponibles dans chaque classe de la salle.
 // Elle prend en paramètre une salle.
 // Elle retourne la salle avec le nombre de places disponibles dans chaque classe mis à jour.
-Salle comptePlace(Salle a){
+Salle comptePlace(Salle a) {
     // Initialise le compteur de places disponibles dans chaque classe à 0
     a.places[0] = 0;
     a.places[1] = 0;
@@ -297,26 +299,26 @@ Salle comptePlace(Salle a){
     a.places[5] = 0;
 
     // Parcourt toutes les rangées de la salle
-    for (int i = 1; i < a.taille[0]+1; ++i) {
+    for (int i = 1; i < a.taille[0] + 1; ++i) {
         // Parcourt toutes les places dans la rangée
         for (int j = 0; j < a.taille[i]; ++j) {
             // Incrémente le compteur de la classe correspondante selon le code de la place
-            if(a.arr[i-1][j].code == 0){
+            if (a.arr[i - 1][j].code == 0) {
                 a.places[0]++;
             }
-            if(a.arr[i-1][j].code == 1){
+            if (a.arr[i - 1][j].code == 1) {
                 a.places[1]++;
             }
-            if(a.arr[i-1][j].code == 2){
+            if (a.arr[i - 1][j].code == 2) {
                 a.places[2]++;
             }
-            if(a.arr[i-1][j].code == 3){
+            if (a.arr[i - 1][j].code == 3) {
                 a.places[3]++;
             }
-            if(a.arr[i-1][j].code == 4){
+            if (a.arr[i - 1][j].code == 4) {
                 a.places[4]++;
             }
-            if(a.arr[i-1][j].code == 5){
+            if (a.arr[i - 1][j].code == 5) {
                 a.places[5]++;
             }
         }

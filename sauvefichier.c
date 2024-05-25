@@ -8,13 +8,13 @@
 
 // Cette fonction vérifie si un nom existe déjà dans le fichier de sauvegarde.
 // Si le nom n'existe pas, il est ajouté à la fin du fichier.
-void verifSauvegarde(char *nom){
+void verifSauvegarde(char *nom) {
     // Ouvre le fichier de sauvegarde en mode lecture/écriture
     FILE *fichier;
     fichier = fopen("sauvegarde.txt", "r+");
 
     // Vérifie si le fichier a été correctement ouvert
-    if(fichier == NULL){
+    if (fichier == NULL) {
         printf("erreur lors de l'ouverture du fichier");
         exit(2);
     }
@@ -23,19 +23,19 @@ void verifSauvegarde(char *nom){
     int c = 0;
 
     // Parcourt le fichier ligne par ligne
-    while(fgets(save, 49, fichier)){
+    while (fgets(save, 49, fichier)) {
         // Supprime le caractère de saut de ligne à la fin de chaque ligne
         save[strcspn(save, "\n")] = '\0';
 
         // Vérifie si le nom existe déjà dans le fichier
-        if(strcmp(save, nom) == 0){
+        if (strcmp(save, nom) == 0) {
             c++; // Incrémente le compteur si le nom est trouvé
             break;
         }
     }
 
     // Si le nom n'existe pas dans le fichier, l'ajoute à la fin du fichier
-    if(c == 0){
+    if (c == 0) {
         fseek(fichier, 0, SEEK_END); // Place le curseur à la fin du fichier
         fputs(nom, fichier); // Écrit le nom dans le fichier
         fputc('\n', fichier); // Ajoute un saut de ligne après le nom
@@ -45,13 +45,13 @@ void verifSauvegarde(char *nom){
 }
 
 // Cette fonction sauvegarde les informations d'une salle dans un fichier.
-void sauveSalle(Salle a){
+void sauveSalle(Salle a) {
     a = comptePlace(a); // Met à jour le nombre de places disponibles dans la salle
     FILE *save = NULL;
     save = fopen(a.nomFichier, "w"); // Ouvre le fichier en mode écriture
 
     // Vérifie si le fichier a été correctement ouvert
-    if(save == NULL){
+    if (save == NULL) {
         printf("erreur lors de l'ouverture du fichier");
         exit(1);
     }
@@ -75,14 +75,14 @@ void sauveSalle(Salle a){
     fprintf(save, "%d\n", a.taille[0]); // Nombre de rangées
 
     // Écrit le nombre de sièges dans chaque rangée
-    for (int i = 1; i < a.taille[0]+1; ++i) {
+    for (int i = 1; i < a.taille[0] + 1; ++i) {
         fprintf(save, "%d\n", a.taille[i]);
     }
 
     // Écrit les codes de chaque siège dans le fichier
-    for (int i = 1; i < a.taille[0]+1; ++i) {
+    for (int i = 1; i < a.taille[0] + 1; ++i) {
         for (int j = 0; j < a.taille[i]; ++j) {
-            fprintf(save, "%d ", a.arr[i-1][j].code);
+            fprintf(save, "%d ", a.arr[i - 1][j].code);
         }
         fputs("\n", save);
     }
@@ -113,11 +113,11 @@ void sauveSalle(Salle a){
 
 
 // Cette fonction lit les informations d'une salle à partir d'un fichier de sauvegarde.
-Salle lectureSauve(char *nom){
+Salle lectureSauve(char *nom) {
     FILE *save = NULL;
     save = fopen(nom, "r+");
 
-    if(save == NULL){
+    if (save == NULL) {
         printf("erreur lors de l'ouverture du fichier");
         exit(2);
     }
@@ -131,14 +131,14 @@ Salle lectureSauve(char *nom){
 
     // Alloue dynamiquement de la mémoire pour le nom de la salle
     a.nom = NULL;
-    a.nom = malloc(c+1);
+    a.nom = malloc(c + 1);
 
     // Alloue dynamiquement de la mémoire pour le nom du fichier de sauvegarde
     a.nomFichier = NULL;
-    a.nomFichier = malloc(c+12);
+    a.nomFichier = malloc(c + 12);
 
     // Vérifie si l'allocation de mémoire a réussi
-    if(a.nom == NULL || a.nomFichier == NULL){
+    if (a.nom == NULL || a.nomFichier == NULL) {
         printf("erreur lors de l'allocation\n");
         exit(1);
     }
@@ -146,23 +146,23 @@ Salle lectureSauve(char *nom){
     // Copie le nom de fichier dans la structure de salle
     for (int i = 0; i < c; ++i) {
         a.nom[i] = b[i];
-        a.nomFichier [i] = b[i];
+        a.nomFichier[i] = b[i];
     }
-    b[c-1] = '\0';
+    b[c - 1] = '\0';
 
     // Ajoute l'extension ".SALLESAUVE" au nom du fichier de sauvegarde
-    a.nomFichier[c-1] = '.';
+    a.nomFichier[c - 1] = '.';
     a.nomFichier[c] = 'S';
-    a.nomFichier[c+1] = 'A';
-    a.nomFichier[c+2] = 'L';
-    a.nomFichier[c+3] = 'L';
-    a.nomFichier[c+4] = 'E';
-    a.nomFichier[c+5] = 'S';
-    a.nomFichier[c+6] = 'A';
-    a.nomFichier[c+7] = 'U';
-    a.nomFichier[c+8] = 'V';
-    a.nomFichier[c+9] = 'E';
-    a.nomFichier[c+10] = b[c-1];
+    a.nomFichier[c + 1] = 'A';
+    a.nomFichier[c + 2] = 'L';
+    a.nomFichier[c + 3] = 'L';
+    a.nomFichier[c + 4] = 'E';
+    a.nomFichier[c + 5] = 'S';
+    a.nomFichier[c + 6] = 'A';
+    a.nomFichier[c + 7] = 'U';
+    a.nomFichier[c + 8] = 'V';
+    a.nomFichier[c + 9] = 'E';
+    a.nomFichier[c + 10] = b[c - 1];
 
     // Lit les informations de la salle à partir du fichier
     fscanf(save, "%d", &a.siege);
@@ -173,13 +173,13 @@ Salle lectureSauve(char *nom){
 
     // Alloue dynamiquement de la mémoire pour stocker les tailles des rangées
     a.taille = NULL;
-    a.taille = malloc(sizeof(int) * (taille+1));
+    a.taille = malloc(sizeof(int) * (taille + 1));
     verifAlloc(a.taille);
 
     a.taille[0] = taille;
 
     // Lit le nombre de sièges dans chaque rangée
-    for (int i = 1; i < a.taille[0]+1; ++i) {
+    for (int i = 1; i < a.taille[0] + 1; ++i) {
         fscanf(save, "%d", &a.taille[i]);
         fgetc(save);
     }
@@ -191,15 +191,15 @@ Salle lectureSauve(char *nom){
 
     for (int i = 0; i < a.taille[0]; ++i) {
         a.arr[i] = NULL;
-        a.arr[i] = malloc(sizeof(Place) * a.taille[i+1]);
+        a.arr[i] = malloc(sizeof(Place) * a.taille[i + 1]);
         verifAlloc(a.arr[i]);
     }
 
     // Lit les codes de chaque siège et les initialise
-    for (int i = 1; i < a.taille[0]+1; ++i) {
+    for (int i = 1; i < a.taille[0] + 1; ++i) {
         for (int j = 0; j < a.taille[i]; ++j) {
-            fscanf(save, "%d ", &a.arr[i-1][j].code);
-            devPlace(&a.arr[i-1][j]);
+            fscanf(save, "%d ", &a.arr[i - 1][j].code);
+            devPlace(&a.arr[i - 1][j]);
         }
     }
 
@@ -226,10 +226,11 @@ Salle lectureSauve(char *nom){
     for (int i = 0; i < c; ++i) {
         a.artiste[i] = b[i];
     }
-    a.artiste[c-1] = '\0';
+    a.artiste[c - 1] = '\0';
 
     // Lit le nombre de places disponibles pour chaque classe de sièges
-    fscanf(save, "%d %d %d %d %d %d", &a.places[0], &a.places[1], &a.places[2], &a.places[3], &a.places[4], &a.places[5]);
+    fscanf(save, "%d %d %d %d %d %d", &a.places[0], &a.places[1], &a.places[2], &a.places[3], &a.places[4],
+           &a.places[5]);
 
     fclose(save); // Ferme le fichier
     a = verifSiege(a); // Vérifie et met à jour le nombre de sièges réservés
