@@ -152,7 +152,7 @@ int main() {
                     videTerminal();
                     manage();
                     a = creerSalle();
-                    saveSalle(a);
+                    sauveSalle(a);
                 }
                 else if (c1 == 2) {
 
@@ -169,7 +169,7 @@ int main() {
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
                             }else{
-                                a = lectureSave(nom);
+                                a = lectureSauve(nom);
                             }
                         }
                     }
@@ -178,7 +178,7 @@ int main() {
                     a = modifSalle(a, nom, date);
                     pauseTerminal();
                     nom[0] = '\0';
-                    saveSalle(a);
+                    sauveSalle(a);
                 } else if (c1 == 3) {
                     while (fopen(nom, "r") == NULL) {
                         if(a.nom != NULL){
@@ -195,7 +195,7 @@ int main() {
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
                             }else{
-                                a = lectureSave(nom);
+                                a = lectureSauve(nom);
                             }
                     }
 
@@ -240,7 +240,7 @@ int main() {
                     while(fgets(save, 49, fichier)){
                         m++;
                         save[strcspn(save, "\n")] = '\0';
-                        s = lectureSave(save);
+                        s = lectureSauve(save);
                         if((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois <  s.date.mois) || (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)){
                             afficheSalle(s, 1);
                         }
@@ -264,14 +264,14 @@ int main() {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
                                 pauseTerminal();
                             }else{
-                                a = lectureSave(nom);
+                                a = lectureSauve(nom);
                             }
                         }
                     }
                     videTerminal();
                     festival();
                     a = reservePlace(a);
-                    saveSalle(a);
+                    sauveSalle(a);
                     videTerminal();
                     festival();
                     afficheSalle(a, 1);
@@ -293,7 +293,7 @@ int main() {
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
                             } else {
-                                a = lectureSave(nom);
+                                a = lectureSauve(nom);
                             }
                         }
                     }

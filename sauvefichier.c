@@ -36,7 +36,7 @@ void verifSauvegarde(char *nom){
     fclose(fichier);
 }
 
-void saveSalle(Salle a){
+void sauveSalle(Salle a){
     a = comptePlace(a);
     FILE *save = NULL;
     save = fopen(a.nomFichier, "w");
@@ -83,7 +83,7 @@ void saveSalle(Salle a){
     fclose(save);
 }
 
-Salle lectureSave(char *nom){
+Salle lectureSauve(char *nom){
     FILE *save = NULL;
     save = fopen(nom, "r+");
 

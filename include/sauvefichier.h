@@ -3,9 +3,9 @@
 
 #include "salle.h"
 
-void saveSalle(Salle);
+void sauveSalle(Salle);
 
-Salle lectureSave(char *);
+Salle lectureSauve(char *);
 
 void verifSauvegarde(char *);
 

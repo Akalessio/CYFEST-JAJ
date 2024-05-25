@@ -80,7 +80,7 @@ void afficheSauvegarde(Date date, int cle) {
         while (fgets(save, 49, fichier)) {
             m++;
             save[strcspn(save, "\n")] = '\0';
-            s = lectureSave(save);
+            s = lectureSauve(save);
 
             if ((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois < s.date.mois) ||
                 (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)) {
