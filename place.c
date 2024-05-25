@@ -9,6 +9,7 @@
 
 Place creerPlace(int a) {
     Place c;
+    int res = -1;
     c.classe = 0;
 
     while (c.classe != 'A' && c.classe != 'B' && c.classe != 'C') {
@@ -22,31 +23,17 @@ Place creerPlace(int a) {
             c.classe = 'C';
             c.code = 2;
         } else {
-            printf("entrez une categorie de siege disponible : 1, 2 ou 3\n");
-            scanf("%d", &a);
+            while(res != 1) {
+                printf("entrez une categorie de siege disponible : 1, 2 ou 3\n");
+                res = scanf("%d", &a);
+
+                if (res != 1) {
+                    while (getchar() != '\n');
+                }
+            }
         }
     }
     c.res = 0;
-
-
-    /*if(c.classe == 'A' && c.res == 0){
-        c.code == 0;
-    }
-    else if (c.classe == 'B' && c.res == 0){
-        c.code == 1;
-    }
-    else if (c.classe == 'C' && c.res == 0){
-        c.code == 2;
-    }
-    else if (c.classe == 'A' && c.res == 1){
-        c.code == 3;
-    }
-    else if (c.classe == 'B' && c.res == 1){
-        c.code == 4;
-    }
-    else if (c.classe == 'C' && c.res == 1){
-        c.code == 5;
-    }*/
 
     return c;
 }
@@ -96,19 +83,20 @@ Salle reservePlace(Salle a) {
 
     int r = 0, l = 0, v = 0;
 
-    while (p <= 0 || p > a.siege - a.siegeres) {
+    while (res != 1 || p <= 0 || p > a.siege - a.siegeres) {
         printf("combien de places voulez vous reservez\n");
-        scanf("%d", &p);
+        res = scanf("%d", &p);
+        if (res != 1){
+            while (getchar() != '\n');
+        }
     }
     printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
     int b = 0;
     for (int i = 0; i < p; ++i) {
-        printf("test 1\n");
         res = -1;
         v = -1;
         if(a.fosse == 1 && a.places[0] != 0) {
             while (res != 1 || c < 1 || c > 2) {
-                printf("test 1\n");
                 printf("voulez vous une place en fosse\n1) oui\n2) non\n");
                 res = scanf("%d", &c);
 
@@ -194,16 +182,16 @@ Salle reservePlace(Salle a) {
         while (res != 1 || v != 0 && v != 1) {
             printf("etes vous sur de vouloir reserver cette place\n1 pour oui\n0 pour non\n");
             res = scanf("%d", &v);
-
+            if (res != 1){
+                while (getchar() != '\n');
+            }
+        }
             if (v == 1) {
                 a.arr[r - 1][l - 1].res = 1;
             }
             if (v == 0) {
                 i--;
-                continue;
             }
-        }
-
     }
     actualiseSiege(a);
     a = verifSiege(a);

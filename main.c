@@ -175,7 +175,8 @@ int main() {
                     }
                     videTerminal();
                     manage();
-                    a = modifSalle(a, nom, date);
+                    a = modifSalle(a, date);
+                    remove(nom);
                     pauseTerminal();
                     nom[0] = '\0';
                     sauveSalle(a);

@@ -16,6 +16,7 @@ Salle creerSalle(void) {
     char *res = NULL;
     int ress;
     int str;
+    int sec = -1;
 
     while (res == NULL) {
         printf("entrez le nom de la salle\n");
@@ -204,13 +205,29 @@ Salle creerSalle(void) {
         }
 
     }
-    printf("quel est le prix d'une place de classe 1\n");
-    scanf("%f", &a.classeA);
-    printf("quel est le prix d'une place de classe 2\n");
-    scanf("%f", &a.classeB);
-    printf("quel est le prix d'une place de classe 3\n");
-    scanf("%f", &a.classeC);
-
+    while(sec != 1) {
+        printf("quel est le prix d'une place de classe 1\n");
+        sec = scanf("%f", &a.classeA);
+        if (sec != 1) {
+            while (getchar() != '\n');
+        }
+    }
+    sec = -1;
+    while(sec != 1) {
+        printf("quel est le prix d'une place de classe 2\n");
+        sec = scanf("%f", &a.classeB);
+        if (sec != 1) {
+            while (getchar() != '\n');
+        }
+    }
+    sec = -1;
+    while(sec != 1) {
+        printf("quel est le prix d'une place de classe 3\n");
+        sec = scanf("%f", &a.classeC);
+        if (sec != 1) {
+            while (getchar() != '\n');
+        }
+    }
     if (z != a.siege) {
         printf("le nombre de siege annonce ne correspond pas au nombre de rangees et lignes\n");
         freeSalle(a);
@@ -223,7 +240,7 @@ Salle creerSalle(void) {
     int ressj = -1, ressm = -1, ressa = -1;
     while(ress != 3){
         while (ressa != 1 || a.date.annee < 2024){
-            printf("entrez l'année du concert\n");
+            printf("entrez l'annee du concert\n");
             ressa = scanf("%d", &a.date.annee);
             if (ressa != 1) {
                 while (getchar() != '\n');
@@ -336,13 +353,13 @@ Salle creerSalle(void) {
 
 void afficheSalle(Salle a, int cle) {
 
-    char *suffix = ".SALLESAUVE";
+    char *suffixe = ".SALLESAUVE";
     char aff[50] = "";
     strncpy(aff, a.nomFichier, 49);
-    char *pos = strstr(aff, suffix);
+    char *fin = strstr(aff, suffixe);
 
-    if (pos != NULL) {
-        *pos = '\0';
+    if (fin != NULL) {
+        *fin = '\0';
     }
 
     printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -461,7 +478,7 @@ void freeSalle(Salle a) {
     free(a.taille);
 }
 
-Salle modifSalle(Salle a, char *nom, Date date) {
+Salle modifSalle(Salle a, Date date) {
     if((date.annee < a.date.annee) || (date.annee == a.date.annee && date.mois <  a.date.mois) || (date.annee == a.date.annee && date.mois == a.date.mois && date.jour <= a.date.jour)){
         printf("le concert n'a pas encore eu lieu et ne peut pas etre modifie\n");
         return a;
@@ -478,17 +495,33 @@ Salle modifSalle(Salle a, char *nom, Date date) {
     int res = -1;
     int c = -1;
     char tabs[50];
+    int sec =-1;
+    char *sectab = NULL;
     while (c != 6) {
-        printf("que voulez vous modifier, entrez le chiffre correspondant\n");
-        printf("1) nom/nom fichier\n2) nombre de siege/disposition de la salle\n3) prix des places\n4) le nom de l'artiste jouant\n5) la date du concert\n6) quitter le mode de modification\n");
-        scanf("%d", &c);
-
-
+        while (sec != 1 || c < 1 || c > 6) {
+            printf("que voulez vous modifier, entrez le chiffre correspondant\n");
+            printf("1) nom/nom fichier\n2) nombre de siege/disposition de la salle\n3) prix des places\n4) le nom de l'artiste jouant\n5) la date du concert\n6) quitter le mode de modification\n");
+            sec = scanf("%d", &c);
+            if(sec != 1){
+                videTerminal();
+                while (getchar() != '\n');
+            }
+        }
+        sec = -1;
         if (c == 1) {
-            printf("entrez le nouveau nom de la salle\n");
-            scanf("%s", tabs);
-            int l = strlen(tabs);
 
+            while (sectab == NULL) {
+                printf("entrez le nouveau nom de la salle\n");
+                while (getchar() != '\n');
+                sectab = fgets(tabs, 49, stdin);
+            }
+            char *suffixe = "\n";
+            char *fin = strstr(tabs, suffixe);
+            if (fin != NULL) {
+                *fin = '\0';
+            }
+            sectab = NULL;
+            int l = strlen(tabs);
             free(a.nom);
             free(a.nomFichier);
 
@@ -515,11 +548,10 @@ Salle modifSalle(Salle a, char *nom, Date date) {
             a.nomFichier[l + 11] = tabs[l];
 
             printf("le nouveau nom de la salle est : %s\nle nouveau nom du fichier est : %s\n", a.nom, a.nomFichier);
-            remove(nom);
         } else if (c == 2) {
             int c1 = -1, c2 = -1;
             int r = -1, l = -1, k = -1;
-
+            res = -1;
             while (res != 1 || c1 <= 0 || c1 > 2) {
                 printf("voulez vous changer\n1)une rangee\n2)retour\n");
                 res = scanf("%d", &c1);
@@ -529,16 +561,30 @@ Salle modifSalle(Salle a, char *nom, Date date) {
                 }
             }
             //==========================================================================================================
+            res = -1;
             if (c1 == 1) {
-                while (c2 <= 0 || c2 > 2) {
-                    printf("voulez vous \n1)ajouter une rangee\n2) modifier ou supprimer une rangee\n");
-                    scanf("%d", &c2);
+                while (res != 1 || c2 < 0 || c2 > 2) {
+                    printf("voulez vous\n1)ajouter une rangee\n2) modifier ou supprimer une rangee\n");
+                    res = scanf("%d", &c2);
+                    if (res != 1){
+                        while (getchar() != '\n');
+                    }
                 }
+                if(a.taille[0] == 0 && c2 == 2){
+                    printf("\n\nvous ne pouvez pas modifier de rangee car il n'y en a plus\n\n");
+                    c2 = -1;
+                }
+                res = -1;
                 if (c2 == 1) {
-                    while (r <= 0 || r > a.taille[0] + 1) {
+                    res = -1;
+                    while (res != 1 || r <= 0 || r > a.taille[0] + 1) {
                         printf("quelle rangee souhaiter vous rajouter\nvous pouvez selectionner une rangee de 1 a %d\n",
                                a.taille[0] + 1);
-                        scanf("%d", &r);
+                        res = scanf("%d", &r);
+
+                        if (res != 1){
+                            while (getchar() != '\n');
+                        }
                     }
                     a.taille[0]++;
                     Place **tab = NULL;
@@ -554,40 +600,70 @@ Salle modifSalle(Salle a, char *nom, Date date) {
                         taille[i] = a.taille[i];
                     }
                     taille[r - 1] = a.taille[r - 1];
-
-                    printf("quel est la taille de la rangee\n");
-                    scanf("%d", &l);
+                    res = -1;
+                    while(res != 1) {
+                        printf("quel est la taille de la rangee\n");
+                        res = scanf("%d", &l);
+                        if (res != 1) {
+                            while (getchar() != '\n');
+                        }
+                    }
 
                     taille[r] = l;
-
-                    printf("qu'elle est la categorie de place de cette rangée\n");
-                    scanf("%d", &k);
-
-                    tab[r - 1] = malloc(l * sizeof(Place));
-
-                    for (int i = 0; i < l; ++i) {
-                        tab[r - 1][i] = creerPlace(k);
+                    res = -1;
+                    while(res != 1) {
+                        printf("qu'elle est la categorie de place de cette rangee\n1) classe A\n2) classe B\n3) classe C\n");
+                        res = scanf("%d", &k);
+                        if (res != 1) {
+                            while (getchar() != '\n');
+                        }
+                    }
+                    if(a.fosse == 1 && k == 1) {
+                        tab[r - 1] = malloc(2 * l * sizeof(Place));
+                        for (int i = 0; i < 2*l; ++i) {
+                            tab[r - 1][i] = creerPlace(k);
+                        }
+                        for (int i = r; i < a.taille[0]; ++i) {
+                            tab[i] = a.arr[i - 1];
+                            taille[i + 1] = a.taille[i];
+                        }
+                    }
+                    else{
+                        tab[r - 1] = malloc(l * sizeof(Place));
+                        for (int i = 0; i < l; ++i) {
+                            tab[r - 1][i] = creerPlace(k);
+                        }
+                        for (int i = r; i < a.taille[0]; ++i) {
+                            tab[i] = a.arr[i - 1];
+                            taille[i + 1] = a.taille[i];
+                        }
                     }
 
-                    for (int i = r; i < a.taille[0]; ++i) {
-                        tab[i] = a.arr[i - 1];
-                        taille[i + 1] = a.taille[i];
-                    }
+
+
                     free(a.taille);
                     a.taille = taille;
 
                     free(a.arr);
                     a.arr = tab;
                     a.siege += l;
-
+                    res = -1;
                 } else if (c2 == 2) {
-                    while (r <= 0) {
+                    res = -1;
+                    while (res != 1 || r <= 0 || r > a.taille[0]) {
                         printf("quelle rangee voulez vous modifer de 1 a %d\n", a.taille[0]);
-                        scanf("%d", &r);
+                        res = scanf("%d", &r);
+                        if (res != 1){
+                            while (getchar() != '\n');
+                        }
                     }
-                    while (l < 0) {
+                    res = -1;
+                    while (res != 1 || l < 0) {
                         printf("quel est la nouvelle taille de la rangee (0 pour supprimer la rangee)\n");
-                        scanf("%d", &l);
+                        res = scanf("%d", &l);
+                        if (res != 1){
+                            while (getchar() != '\n');
+                        }
                     }
                     if (l == 0) {
                         free(a.arr[r - 1]);
@@ -602,48 +678,70 @@ Salle modifSalle(Salle a, char *nom, Date date) {
                         taille1[0] = a.taille[0] - 1;
                         a.siege -= a.taille[r];
 
-                        for (int i = 1; i < r + 1; ++i) {
+                        for (int i = 1; i < r; ++i) {
                             taille1[i] = a.taille[i];
                         }
+                        if(r < a.taille[0]) {
+                            taille1[r] = a.taille[r + 1];
 
-                        taille1[r + 1] = a.taille[r + 2];
-
-                        for (int i = r + 2; i < a.taille[0]; ++i) {
-                            taille1[i] = a.taille[i + 1];
+                            for (int i = r + 1; i < a.taille[0]; ++i) {
+                                taille1[i] = a.taille[i + 1];
+                            }
                         }
-
                         for (int i = 0; i < r - 1; ++i) {
                             tab1[i] = a.arr[i];
                         }
+                        if(r < a.taille[0]) {
+                            tab1[r - 1] = a.arr[r];
 
-                        tab1[r - 1] = a.arr[r];
-
-                        for (int i = r; i < a.taille[0] - 1; ++i) {
-                            tab1[i] = a.arr[i + 1];
+                            for (int i = r; i < a.taille[0] - 1; ++i) {
+                                tab1[i] = a.arr[i + 1];
+                            }
                         }
-
                         free(a.taille);
                         a.taille = taille1;
                         free(a.arr);
                         a.arr = tab1;
 
+                        if(a.taille[0] == 0){
+                            a.arr = malloc(sizeof(Place *));
+                            free(a.taille);
+                            a.taille = malloc(2*sizeof(int));
+                            a.taille[0] = 0;
+                            a.taille[1] = 1;
+                        }
+
 
                     } else {
+                        k = (a.arr[r - 1][0].code);
                         free(a.arr[r - 1]);
-                        k = (int) (a.arr[r - 1][0].classe - 16);
-                        a.arr[r - 1] = malloc(l * sizeof(Place));
+                        if(a.fosse == 1 && k == 0){
+                            a.arr[r - 1] = malloc(2 * l * sizeof(Place));
 
-                        for (int i = 0; i < l; ++i) {
-                            a.arr[r - 1][i] = creerPlace(k);
+                            for (int i = 0; i < 2 * l; ++i) {
+                                a.arr[r - 1][i] = creerPlace(k + 1);
+                            }
+                            if (2 * l < a.taille[r]) {
+                                a.siege -=  2 *l;
+                            } else if (2 * l > a.taille[r]) {
+                                a.siege += l * 2;
+                            }
+
+                            a.taille[r] = l * 2;
+                        }else {
+                            a.arr[r - 1] = malloc(l * sizeof(Place));
+
+                            for (int i = 0; i < l; ++i) {
+                                a.arr[r - 1][i] = creerPlace(k + 1);
+                            }
+                            if (l < a.taille[r]) {
+                                a.siege -= l;
+                            } else if (l > a.taille[r]) {
+                                a.siege += l;
+                            }
+
+                            a.taille[r] = l;
                         }
-                        if (l < a.taille[r]) {
-                            a.siege -= l;
-                        } else if (l > a.taille[r]) {
-                            a.siege += l;
-                        }
-
-                        a.taille[r] = l;
-
                     }
                 }
 
@@ -652,24 +750,44 @@ Salle modifSalle(Salle a, char *nom, Date date) {
         } else if (c == 3) {
             int k;
             float p;
-            while (k < 1 || k > 3) {
+            res = -1;
+            while (res != 1 || k < 1 || k > 3) {
                 printf("quelle categorie voulez vous modifer\n1) A\n2) B\n3) C\n");
-                scanf("%d", &k);
+                res = scanf("%d", &k);
+                if (res != 1){
+                    while (getchar() != '\n');
+                }
             }
+            res = -1;
             switch (k) {
                 case 1:
-                    printf("quelle est le nouveau prix\n");
-                    scanf("%f", &p);
+                    while (res != 1) {
+                        printf("quel est le nouveau prix\n");
+                        res = scanf("%f", &p);
+                        if (res != 1) {
+                            while (getchar() != '\n');
+                        }
+                    }
                     a.classeA = p;
                     break;
                 case 2:
-                    printf("quelle est le nouveau prix\n");
-                    scanf("%f", &p);
+                    while (res != 1) {
+                        printf("quel est le nouveau prix\n");
+                        res = scanf("%f", &p);
+                        if (res != 1) {
+                            while (getchar() != '\n');
+                        }
+                    }
                     a.classeB = p;
                     break;
                 case 3:
-                    printf("quelle est le nouveau prix\n");
-                    scanf("%f", &p);
+                    while (res != 1) {
+                        printf("quel est le nouveau prix\n");
+                        res = scanf("%f", &p);
+                        if (res != 1) {
+                            while (getchar() != '\n');
+                        }
+                    }
                     a.classeC = p;
                     break;
             }
@@ -702,7 +820,7 @@ Salle modifSalle(Salle a, char *nom, Date date) {
             int ressj = -1, ressm = -1, ressa = -1;
             while(ress != 3){
                 while (ressa != 1 || a.date.annee < 2024){
-                    printf("entrez l'année du concert\n");
+                    printf("entrez l'annee du concert\n");
                     ressa = scanf("%d", &a.date.annee);
                     if (ressa != 1) {
                         while (getchar() != '\n');
