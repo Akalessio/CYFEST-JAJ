@@ -100,15 +100,15 @@ Salle reservePlace(Salle a) {
         printf("combien de places voulez vous reservez\n");
         scanf("%d", &p);
     }
-
+    printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
+    int b = 0;
     for (int i = 0; i < p; ++i) {
+        printf("test 1\n");
         res = -1;
         v = -1;
-        printf("il y a %d places libres de classe A\nil y a %d places libres de classe B\nil y a %d places libres de classe C\n", a.places[0], a.places[1], a.places[2]);
-
         if(a.fosse == 1 && a.places[0] != 0) {
             while (res != 1 || c < 1 || c > 2) {
-
+                printf("test 1\n");
                 printf("voulez vous une place en fosse\n1) oui\n2) non\n");
                 res = scanf("%d", &c);
 
@@ -119,11 +119,9 @@ Salle reservePlace(Salle a) {
             res = -1;
             if(c == 1){
                 printf("le prix d'une place en fosse est de %fe", a.classeA);
-
-                while (res != 1 || v != 0 && v != 1) {
+                while (res != 1 || (v != 0 && v != 1)) {
                     printf("etes vous sur de vouloir reserver cette place\n1) oui\n0) non\n");
                     res = scanf("%d", &v);
-
                     if(res != 1){
                         while (getchar() != '\n');
                     }
@@ -131,33 +129,52 @@ Salle reservePlace(Salle a) {
                     if (v == 1) {
                         for (int j = 1; j < a.taille[0]+1; ++j) {
                             for (int k = 0; k < a.taille[j]; ++k) {
-                                if(a.arr[i-1][j].res != 1){
-                                    a.arr[i-1][j].res = 1;
-                                    j=a.taille[0]+3;
+                                if(a.arr[j-1][k].res != 1){
+                                    a.arr[j-1][k].res = 1;
+                                    b = 1;
+                                    break;
                                 }
+                            }
+                            if(b == 1){
+                                break;
                             }
                         }
                         continue;
                     }
                     if (v == 0) {
                         i--;
+                        b = 1;
                         continue;
                     }
                 }
 
             }
         }
+        if(b == 1){
+            b = 0;
+            continue;
+        }
         v = -1;
         r = -1;
         l = -1;
+        res = -1;
 
-        while (r > a.taille[0] - 1 || r <= 0) {
+        while (res != 1 || r > a.taille[0] || r <= 0) {
             printf("rentrez le numero de la rangee\n");
-            scanf("%d", &r);
+            res = scanf("%d", &r);
+
+            if(res != 1){
+                while (getchar() != '\n');
+            }
         }
-        while (l > a.taille[r + 1] - 1 || l <= 0) {
+        res = -1;
+
+        while (res != 1 || l > a.taille[r] || l <= 0) {
             printf("rentrez le numero de la ligne\n");
-            scanf("%d", &l);
+            res = scanf("%d", &l);
+            if(res != 1){
+                while (getchar() != '\n');
+            }
         }
 
         if (a.arr[r - 1][l - 1].res == 1) {

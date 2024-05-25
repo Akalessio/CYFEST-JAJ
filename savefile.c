@@ -45,8 +45,15 @@ void saveSalle(Salle a){
         printf("erreur lors de l'ouverture du fichier");
         exit(1);
     }
+    char *suffix = ".SALLESAUVE";
+    char aff[50] = "";
+    strncpy(aff, a.nomFichier, 49);
+    char *pos = strstr(aff, suffix);
 
-    fputs(a.nom, save);
+    if (pos != NULL) {
+        *pos = '\0';
+    }
+    fputs(aff, save);
     fputs("\n", save);
 
     fprintf(save, "%d\n", a.siege);

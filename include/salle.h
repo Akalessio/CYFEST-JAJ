@@ -35,7 +35,7 @@ Salle creerSalle(void);
 void afficheSalle(Salle, int);
 void freeSalle(Salle);
 void affichePlan(Salle);
-Salle modifSalle(Salle, char *);
+Salle modifSalle(Salle, char *, Date);
 
 #endif
 

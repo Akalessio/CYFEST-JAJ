@@ -6,20 +6,6 @@
 #include "place.h"
 #include "fonx.h"
 
-void videTerminal() {
-#if defined(_WIN32) || defined(_WIN64)
-    system("cls");
-#else
-    system("clear");
-#endif
-}
-
-void pauseTerminal() {
-    printf("Appuyez sur entree pour revenir au menu...");
-    while (getchar() != '\n');
-    getchar();
-}
-
 int main() {
 
     if(fopen("sauvegarde.txt", "r") == NULL){
@@ -152,6 +138,7 @@ int main() {
 
         if (c == 1) {
             while (res1 != 1 || c1 != 4) {
+                a.nom = NULL;
                 c1 = -1;
                 res1 = -1;
                 videTerminal();
@@ -176,7 +163,7 @@ int main() {
                             videTerminal();
                             manage();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
-                            afficheSauvegarde();
+                            afficheSauvegarde(date, 0);
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -188,19 +175,20 @@ int main() {
                             }
                         }
                     }
-                    nom[0] = '\0';
                     videTerminal();
                     manage();
-                    a = modifSalle(a, nom);
+                    a = modifSalle(a, nom, date);
+                    pauseTerminal();
+                    nom[0] = '\0';
                     saveSalle(a);
                 } else if (c1 == 3) {
-
-                    if (a.nom == NULL) {
-                        while (fopen(nom, "r") == NULL) {
-                            videTerminal();
+                    while (fopen(nom, "r") == NULL) {
+                        if(a.nom != NULL){
+                            freeSalle(a);
+                        }   videTerminal();
                             manage();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
-                            afficheSauvegarde();
+                            afficheSauvegarde(date , 0);
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -211,8 +199,8 @@ int main() {
                             }else{
                                 a = lectureSave(nom);
                             }
-                        }
                     }
+
                     nom[0] = '\0';
                     videTerminal();
                     manage();
@@ -221,7 +209,9 @@ int main() {
                     freeSalle(a);
                 }
             }
-        } else if (c == 2) {
+        }
+        //==================================================================================================================================================================================================
+        else if (c == 2) {
             while (res1 != 1 || c1 != 4) {
                 a.nom = NULL;
                 c1 = -1;
@@ -264,9 +254,9 @@ int main() {
                     if (a.nom == NULL) {
                         while (fopen(nom, "r") == NULL) {
                             videTerminal();
-                            manage();
+                            festival();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
-                            afficheSauvegarde();
+                            afficheSauvegarde(date, 1);
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -274,6 +264,7 @@ int main() {
 
                             if (fopen(nom, "r") == NULL) {
                                 printf("le nom du fichier que vous avez entre n'existe pas\n");
+                                pauseTerminal();
                             }else{
                                 a = lectureSave(nom);
                             }
@@ -282,6 +273,7 @@ int main() {
                     videTerminal();
                     festival();
                     a = reservePlace(a);
+                    saveSalle(a);
                     videTerminal();
                     festival();
                     afficheSalle(a, 1);
@@ -294,7 +286,7 @@ int main() {
                             videTerminal();
                             festival();
                             printf("entrez le nom du fichier de sauvegarde(avec l'extension .SALLESAUVE)\n");
-                            afficheSauvegarde();
+                            afficheSauvegarde(date, 1);
                             fgetchar();
                             fgets(nom, 49, stdin);
                             str = strlen(nom);
@@ -316,4 +308,5 @@ int main() {
             }
         }
     }
+    freeSalle(a);
 }

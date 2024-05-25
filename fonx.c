@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "salle.h"
+#include "savefile.h"
 
 
 int plusGrand(int *tab, int a){
@@ -61,22 +63,52 @@ void verifNom(char *a){
     }
 }
 
-void afficheSauvegarde(){
+void afficheSauvegarde(Date date, int cle) {
     FILE *fichier;
     fichier = fopen("sauvegarde.txt", "r");
 
-    if(fichier == NULL){
+    if (fichier == NULL) {
         printf("erreur lors de l'ouverture du fichier");
         exit(2);
     }
 
-    char save[50];
-    int c = 0;
-    printf("les sauvegardes disponibles sont\n\n");
+    if (cle == 1) {
+        int m = 0;
+        char save[50];
+        Salle s;
+        printf("les sauvegardes disponibles sont\n\n");
+        while (fgets(save, 49, fichier)) {
+            m++;
+            save[strcspn(save, "\n")] = '\0';
+            s = lectureSave(save);
 
-    while(fgets(save, 49, fichier)) {
-        printf("%s\n", save);
+            if ((date.annee < s.date.annee) || (date.annee == s.date.annee && date.mois < s.date.mois) ||
+                (date.annee == s.date.annee && date.mois == s.date.mois && date.jour <= s.date.jour)) {
+                printf("%s\n", save);
+            }
+        }
+        fclose(fichier);
+    } else {
+
+        char save[50];
+        printf("les sauvegardes disponibles sont\n\n");
+
+        while (fgets(save, 49, fichier)) {
+            printf("%s\n", save);
+        }
+
     }
-
+}
+void videTerminal() {
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 
+void pauseTerminal() {
+    printf("Appuyez sur entree pour revenir au menu...");
+    while (getchar() != '\n');
+    getchar();
+}
