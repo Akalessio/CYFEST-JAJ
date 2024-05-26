@@ -199,6 +199,18 @@ Salle creerSalle(void) {
         }
     }
 
+// Vérifie si le nombre total de sièges correspond au nombre de sièges entrés
+int z = 0;
+for (int i = 1; i < r + 1; ++i) {
+     z += a.taille[i];
+  }
+ if (z != a.siege) {
+     printf("Le nombre de sièges annoncé ne correspond pas au nombre de rangées et de sièges\n");
+     freeSalle(a);
+    a = creerSalle();
+}
+
+
 // Demande les prix des différentes classes de sièges
     while (sec != 1) {
         printf("Quel est le prix d'une place de classe 1 ?\n");
@@ -222,17 +234,6 @@ Salle creerSalle(void) {
         if (sec != 1) {
             while (getchar() != '\n');
         }
-    }
-
-// Vérifie si le nombre total de sièges correspond au nombre de sièges entrés
-    int z = 0;
-    for (int i = 1; i < r + 1; ++i) {
-        z += a.taille[i];
-    }
-    if (z != a.siege) {
-        printf("Le nombre de sièges annoncé ne correspond pas au nombre de rangées et de sièges\n");
-        freeSalle(a);
-        a = creerSalle();
     }
 
 // Demande la date du concert
@@ -322,7 +323,7 @@ Salle creerSalle(void) {
                     printf("entrez le jour du concert\n");
                     ressj = scanf("%d", &a.date.jour);
                     if (ressj != 1) {
-
+                        while (getchar() != '\n');
                     }
                 }
                 ress++;
