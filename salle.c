@@ -360,7 +360,7 @@ for (int i = 1; i < r + 1; ++i) {
 }
 
 void afficheSalle(Salle a, int cle) {
-
+float moy;
     // Recherche du suffixe ".SALLESAUVE" dans le nom de fichier pour l'affichage
     char *suffixe = ".SALLESAUVE";
     char aff[50] = "";
@@ -377,11 +377,15 @@ void afficheSalle(Salle a, int cle) {
     a = comptePlace(a);
     printf("Nom de salle : %s\nNombre de sièges libres de la salle : %d\nDate du concert : %d/%d/%d\nIl s'agit d'un concert de %s\n",
            aff, (int) (a.siege - a.siegeres), a.date.jour, a.date.mois, a.date.annee, a.artiste);
-
+    
+    moy = (float)(a.siegeres);
+	moy = (float)(moy/a.siege);
+	moy = (float)moy * 100;
+    
     // Affichage du nombre de places libres et réservées selon la classe
     if (cle == 0) {
-        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\nIl y a %d places réservées de classe A\nIl y a %d places réservées de classe B\nIl y a %d places réservées de classe C\n",
-               a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5]);
+        printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\nIl y a %d places réservées de classe A\nIl y a %d places réservées de classe B\nIl y a %d places réservées de classe C\nratio sièges réservés/sièges total : %f%%\n",
+               a.places[0], a.places[1], a.places[2], a.places[3], a.places[4], a.places[5], moy);
     } else {
         printf("Il y a %d places libres de classe A\nIl y a %d places libres de classe B\nIl y a %d places libres de classe C\n",
                a.places[0], a.places[1], a.places[2]);
